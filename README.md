@@ -40,7 +40,7 @@ nsc2e is a utility application which converts Citrix ADC newnslog counter databa
   <tr><td>ssl_tot_sslInfo_Cipher_AES_256</td><td>This counter tracks the number of AES 256-bit cipher encryption on the NetScaler appliance.</td></tr>
   <tr><td>ssl_cur_q_size</td><td>This counter tracks the current queue size</td></
 </table>	
-
+<br>
 <strong>HTTP</strong>
 <table>
   <th>Newnslog Counter Name</th><th>Description</th>
