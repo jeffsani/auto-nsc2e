@@ -3,7 +3,7 @@ author: Jeff Sani
 current version: 1.0
 
 <h1>Description</h1>
-nsc2e is a utility application which converts Citrix ADC newnslog counter databases to Excel format so that data analysis can be performed more in-depthly.  The tool takes a conf file input to indicate what specific counters should be processed as well as the target newnslog file to precess.  If you were looking for information that would be useful for sizing a pooled license or SDX platform resource allocation, you might be interested in looking at the following set of counters for example:
+nsc2e is a utility application which converts Citrix ADC newnslog counter databases to Excel format so that data analysis can be performed more in-depthly.  It was developed back in the day by Jeff Xu.  Jeff if you are still out there, I hope this breathes new life into your much appreciated effort.  The tool takes a conf file input to indicate what specific counters should be processed as well as the target newnslog file to precess.  You can also specify filters for these if you desire to exclude data.  Some example conf files are included in the repo.  ADC counter data is useful for a wide variety of applications such as historical usage, trending, or sizing.  If you were looking for information that would be useful for sizing a pooled license or SDX platform resource allocation, you might be interested in looking at the following set of counters for example:
 </br>
 <table>
   <tr><td colspan="2"><strong>Network</strong></td><td></td></tr>
@@ -29,7 +29,7 @@ nsc2e is a utility application which converts Citrix ADC newnslog counter databa
   <tr><td>ssl_tot_sslInfo_SessionNew</td><td>This counter tracks the rate of new SSL sessions on the NetScaler appliance</td></tr> 
   <tr><td>ssl_tot_sslInfo_Auth_RSA</td><td>This counter tracks the number of RSA authentications on the NetScaler appliance</td></tr>
   <tr><td>ssl_tot_sslInfo_Cipher_AES_256</td><td>This counter tracks the number of AES 256-bit cipher encryption on the NetScaler appliance.</td></tr>
-  <tr><td>ssl_cur_q_size</td><td>This counter tracks the current queue size</td></
+  <tr><td>ssl_cur_q_size</td><td>This counter tracks the current queue size</td></tr>
   <tr><td colspan="2"><strong>HTTP</strong></td><td></td></tr>
   <th>Newnslog Counter Name</th><th>Description</th>
   <tr><td>http_tot_Requests</td><td>This counter tracks HTTP requests received</td></tr>
