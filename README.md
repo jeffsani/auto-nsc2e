@@ -6,7 +6,7 @@ current version: 1.0
 nsc2e is a utility application which converts Citrix ADC newnslog counter databases to Excel format so that data analysis can be performed more in-depthly.  It was developed back in the day by Jeff Xu.  Jeff if you are still out there, I hope this breathes new life into your much appreciated effort.  The tool takes a conf file input to indicate what specific counters should be processed as well as the target newnslog file to precess.  You can also specify filters for these if you desire to exclude data.  Some example conf files are included in the repo.  ADC counter data is useful for a wide variety of applications such as historical usage, trending, or sizing.  If you were looking for information that would be useful for sizing a pooled license or SDX platform resource allocation, you might be interested in looking at the following set of counters for example:
 </br>
 <table>
-  <tr><td><h3>Network</h3></td></tr>
+  <tr><td colspan="2"><h3>Network</h3></td></tr>
   <th>Newnslog Counter Name</th><th>Description</th>
   <tr><td>allnic_tot_rx_mbits</td><td>Number of megabits received across all interfaces</td></tr>
   <tr><td>allnic_tot_tx_mbits</td><td>Number of megabits transmitted across all interfaces</td></tr>
