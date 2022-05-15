@@ -3,35 +3,26 @@ author: Jeff Sani
 current version: 1.0
 
 <h1>Description</h1>
-nsc2e is a utility application which converts Citrix ADC newnslog counter databases to Excel format so that data analysis can be performed more in-depthly.  The tool takes a conf file input to indicate what specific counters should be processed as well as the target newnslog file to precess.  If you were looking for information that would be useful for sizing a pooled license or SDX platform resource allocation, you might be interested in looking at these counters for example:
-
-<strong>Network</strong>
+nsc2e is a utility application which converts Citrix ADC newnslog counter databases to Excel format so that data analysis can be performed more in-depthly.  The tool takes a conf file input to indicate what specific counters should be processed as well as the target newnslog file to precess.  If you were looking for information that would be useful for sizing a pooled license or SDX platform resource allocation, you might be interested in looking at the following set of counters for example:
+</br>
 <table>
+  <tr><td colspan="2"><strong>Network</strong></td><td></td></tr>
   <th>Newnslog Counter Name</th><th>Description</th>
   <tr><td>allnic_tot_rx_mbits</td><td>Number of megabits received across all interfaces</td></tr>
   <tr><td>allnic_tot_tx_mbits</td><td>Number of megabits transmitted across all interfaces</td></tr>
   <tr><td>allnic_tot_rx_packets</td><td>Number of packets received all interfaces</td></tr>
-  <tr><td>nic_err_rl_pkt_drops</td><td></td></tr>
-</table>
-<br>
-<strong>CPU</strong>
-<table>
+  <tr><td>nic_err_rl_pkt_drops</td><td>Number of packets dropped due to platform license rate limit</td></tr>
+  <tr><td colspan="2"><strong>CPU</strong></td><td></td></tr>
   <th>Newnslog Counter Name</th><th>Description</th>
   <tr><td>avg_cpu_usage_pcnt</td><td>This counter tracks the average CPU utilization percentage</td></tr>
   <tr><td>mgmt_cpu_usage_pcnt</td><td> 	This counter tracks the management CPU utilization percentage</td></tr>
   <tr><td>packet_cpu_usage_pcnt</td><td>This counter tracks the packet CPU utilization percentage</td></tr>
-</table>
-<br>
-<strong>Memory</strong>
-<table>
+  <tr><td colspan="2"><strong>Memory</strong></td><td></td></tr>
   <th>Newnslog Counter Name</th><th>Description</th>
   <tr><td>mem_tot_MB</td><td>This counter tracks the total Main memory available for use by packet engine (PE), in megabytes</td></tr>
   <tr><td>mem_tot_use_MB</td><td>This counter tracks the total NetScaler Memory in use, in megabytes</td></tr>
   <tr><td>mem_usage_pcnt</td><td>This counter tracks the percentage of memory utilization on NetScaler</td></tr>
-</table>
-<br>
-<strong>SSL</strong>
-<table>
+  <tr><td colspan="2"><strong>SSL</strong></td><td></td></tr>
   <th>Newnslog Counter Name</th><th>Description</th>
   <tr><td>ssl_tot_sslInfo_TotalTxCount</td><td>This counter tracks the number of SSL transactions on the NetScaler appliance</td></tr>
   <tr><td>ssl_tot_sslInfo_TotalSessionCount</td><td>This counter tracks the number of SSL sessions on the NetScaler appliance</td></tr>
@@ -39,10 +30,7 @@ nsc2e is a utility application which converts Citrix ADC newnslog counter databa
   <tr><td>ssl_tot_sslInfo_Auth_RSA</td><td>This counter tracks the number of RSA authentications on the NetScaler appliance</td></tr>
   <tr><td>ssl_tot_sslInfo_Cipher_AES_256</td><td>This counter tracks the number of AES 256-bit cipher encryption on the NetScaler appliance.</td></tr>
   <tr><td>ssl_cur_q_size</td><td>This counter tracks the current queue size</td></
-</table>	
-<br>
-<strong>HTTP</strong>
-<table>
+  <tr><td colspan="2"><strong>HTTP</strong></td><td></td></tr>
   <th>Newnslog Counter Name</th><th>Description</th>
   <tr><td>http_tot_Requests</td><td>This counter tracks HTTP requests received</td></tr>
   <tr><td>http_tot_Responses</td><td>This counter tracks HTTP responses sent</td></tr>

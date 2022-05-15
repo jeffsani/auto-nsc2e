@@ -37,6 +37,9 @@ echo "Setting execute permissions on nsc2e..." | ts '[%H:%M:%S]' | tee -a $LOGFI
 sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 /$(NEWNSLOG_PATH)/nsc2e*";
 #Exexcute the nsc2e script on the remote ADC
 sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /$(NEWNSLOG_PATH)/nsc2e.sh";
-
-
+#transfer data files back to host
+sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT nsc2e* $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH;
 #
+#cleanup
+rm -rf nsc2e
+find newnslog.* -type d -mtime -30 -delete
