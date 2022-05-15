@@ -37,12 +37,17 @@ This script automates data processing of all newnslog archives which is normally
   <tr><td>http_tot_rxResponseBytes</td><td>This counter tracks the bytes received as response data</td></tr>
 </table>
 
-You can learn about the specific counters available on ADC here - https://support.citrix.com/search/#/All%20Products?ct=All%20types&searchText=adc%20counters&sortBy=Relevance&pageIndex=1.  Note: ADC counters are not synonymous with SNMP counters. While some are represented as SNMP counters, not all of them are.  Be aware that the more counters you specify in the configuration file, the longer it will take to execute the data extraction and overall script runtime will increase.
+You can learn about the specific counters available on ADC <a href="https://support.citrix.com/search/#/All%20Products?ct=All%20types&searchText=adc%20counters&sortBy=Relevance&pageIndex=1">here</a>. Note - Be aware that the more counters you specify in the configuration file, the longer it will take to execute the data extraction, processing, and overall script runtime will increase.  It is also recommended to run this utility script during a maintenance window or non-peak usage times as there will be a consistent load applied to the ADC management core which may impact mangement access and other related dataplane functions.
 
 <h3>Requirements:</h3>
-- a Linux host to run the script on
-- a list of the ADCs that you would like to iterate through
-- a username and password that will work for each device
+<ul>
+  <li>a Linux host to run the script on</li>
+  <li>a list of the ADCs that you would like to iterate through</li>
+  <li>a username and password that will work for each ADC device</li>
+</ul>
 
-<h3>Required Packages:</h3>
--sshpass
+<h3>Required Linux Packages:</h3>
+<ul>
+  <li>sshpass</li>
+</ul>
+
