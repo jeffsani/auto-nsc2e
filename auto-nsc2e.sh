@@ -27,19 +27,28 @@ if [[ -z "${CITRIX_ADC_USER}" || -z "${CITRIX_ADC_PASSWORD}" ]]; then
     exit 1;
 fi
 
+#Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
+INPUT_FILE="./adc-list.txt"
+COUNTER=1
+[ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
+while IFS=":", read -r CITRIX_ADC_IP CITRIX_ADC_PORT
+echo "Now processing ADC: $CITRIX_ADC_IP"
+do
+   #Transfer tool and configuration to ADC
+   echo "Transfering files to ADC..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
+   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT nsc2e* $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH;
+   #Setting execute permissions on nsc2e files
+   echo "Setting execute permissions on nsc2e..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
+   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 /$(NEWNSLOG_PATH)/nsc2e*";
+   #Exexcute the nsc2e script on the remote ADC
+   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /$(NEWNSLOG_PATH)/nsc2e.sh";
+   #transfer data files back to host
+   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT nsc2e* $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH;
+   #cleanup remote folders and files
+   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf /$(NEWNSLOG_PATH)/nsc2e";
+   let COUNTER=COUNTER+1
+done < "$INPUT_FILE"
 
-
-#Transfer tool and configuration to ADC
-echo "Transfering files to ADC..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT nsc2e* $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH;
-#Setting execute permissions on nsc2e files
-echo "Setting execute permissions on nsc2e..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 /$(NEWNSLOG_PATH)/nsc2e*";
-#Exexcute the nsc2e script on the remote ADC
-sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /$(NEWNSLOG_PATH)/nsc2e.sh";
-#transfer data files back to host
-sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT nsc2e* $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH;
-#
 #cleanup
 rm -rf nsc2e
 find newnslog.* -type d -mtime -30 -delete
