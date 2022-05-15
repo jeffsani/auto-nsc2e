@@ -43,7 +43,7 @@ do
    #Exexcute the nsc2e script on the remote ADC
    sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /$(NEWNSLOG_PATH)/nsc2e.sh";
    #transfer data files back to host
-   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT nsc2e* $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH;
+   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH; nsc2e*
    #cleanup remote folders and files
    sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf /$(NEWNSLOG_PATH)/nsc2e";
    let COUNTER=COUNTER+1
