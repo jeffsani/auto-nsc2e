@@ -27,7 +27,7 @@ if [[ -z "${CITRIX_ADC_USER}" || -z "${CITRIX_ADC_PASSWORD}" ]]; then
 fi
 
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
-INPUT_FILE="./scripts/adc-list.txt"
+INPUT_FILE="adc-list.txt"
 [ ! -f $INPUT_FILE ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
 while IFS=":", read -r CITRIX_ADC_IP CITRIX_ADC_PORT
 echo "Now processing ADC: $CITRIX_ADC_IP"
