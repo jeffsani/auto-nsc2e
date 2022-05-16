@@ -47,5 +47,6 @@ do
    sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf /$(NEWNSLOG_PATH)/nsc2e*";
    echo "Done processing $CITRIX_ADC_IP..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
 done < "$INPUT_FILE"
+echo "All done..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
 
 do_cleanup
