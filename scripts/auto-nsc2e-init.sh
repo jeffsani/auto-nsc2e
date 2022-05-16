@@ -2,6 +2,7 @@
 # auto-nsc2e-init.sh
 # This script will setup your host for the auto-nsc2e script on a debian or fedora/centos based host
 
+set -x
 set -o pipefail
 
 # Fix perl locale issue

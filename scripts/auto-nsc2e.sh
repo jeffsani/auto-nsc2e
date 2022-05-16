@@ -2,8 +2,10 @@
 # auto-nsc2e.sh
 # This script will automate nsc2e to extract and convert specific newnslog counter data to excel format across a set of ADCs
 
-Variables
-#newnslog location on ADC
+set -x
+set -o pipefail
+
+#Variables
 NEWNSLOG_PATH="/var/nslog"
 LOGFILE="$(date '+%m%d%Y')-auto-nsc2e.log"
 
