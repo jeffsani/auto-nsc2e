@@ -8,12 +8,10 @@ NEWNSLOG_PATH="/var/nslog"
 RM_NSC2E_TOOL="yes"
 LOGFILE="$(date '+%m%d%Y')-auto-nsc2e.log"
 
-#Do Cleanup function
+#Cleanup function
 function do_cleanup {
-echo "Cleaning up disposable files..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-rm -f *.csv* *.txt *.zip* Citrix_Netscaler_InBuilt_GeoIP_DB_IPv4 Citrix_Netscaler_InBuilt_GeoIP_DB_IPv6
 echo "Searching for old logs > 30 days and removing them..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-find *.log -type f -not -name '*mmgeoip2adc-init.log' -mtime -30 -delete
+find *.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete
 }
 
 #Start Logging
@@ -29,26 +27,26 @@ fi
 
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT_FILE="./adc-list.txt"
-COUNTER=1
-[ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
+[ ! -f $INPUT_FILE ] && { echo "$INPUT file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
 while IFS=":", read -r CITRIX_ADC_IP CITRIX_ADC_PORT
 echo "Now processing ADC: $CITRIX_ADC_IP"
 do
    #Transfer tool and configuration to ADC
    echo "Transfering files to ADC..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT nsc2e* $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH;
+   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT nsc2e nsc2e.sh nsc2e.conf $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH;
    #Setting execute permissions on nsc2e files
    echo "Setting execute permissions on nsc2e..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 /$(NEWNSLOG_PATH)/nsc2e*";
+   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 /$(NEWNSLOG_PATH)/nsc2e.sh /$(NEWNSLOG_PATH)/nsc2e";
    #Exexcute the nsc2e script on the remote ADC
+   echo "Executing nsc2e remotely..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
    sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /$(NEWNSLOG_PATH)/nsc2e.sh";
-   #transfer data files back to host
-   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH; nsc2e*
-   #cleanup remote folders and files
-   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf /$(NEWNSLOG_PATH)/nsc2e";
-   let COUNTER=COUNTER+1
+   #Transfer data files back to host
+   echo "Transferring data back to script host..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
+   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt* ./$(date '+%m%d%Y')-$(CITRIX_ADC_IP).txt;
+   #Cleanup remote folders and files
+   echo "Removing remote files and folders..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
+   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf /$(NEWNSLOG_PATH)/nsc2e*";
+   echo "Done processing $CITRIX_ADC_IP..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
 done < "$INPUT_FILE"
 
-#cleanup
-rm -rf nsc2e
-find newnslog.* -type d -mtime -30 -delete
+do_cleanup
