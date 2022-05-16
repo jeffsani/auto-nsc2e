@@ -37,16 +37,16 @@ do
    sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT ./nsc2e/* /scripts/nsc2e.sh $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH;
    #Setting execute permissions on nsc2e files
    echo "Setting execute permissions on nsc2e..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 /$(NEWNSLOG_PATH)/nsc2e.sh /$(NEWNSLOG_PATH)/nsc2e";
+   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e";
    #Exexcute the nsc2e script on the remote ADC
    echo "Executing nsc2e remotely..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /$(NEWNSLOG_PATH)/nsc2e.sh";
+   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell $NEWNSLOG_PATH/nsc2e.sh";
    #Transfer data files back to host
    echo "Transferring data back to script host..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt* ./$(date '+%m%d%Y')-$(CITRIX_ADC_IP).txt;
+   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt* ./$(date '+%m%d%Y')-$CITRIX_ADC_IP.txt;
    #Cleanup remote folders and files
    echo "Removing remote files and folders..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf /$(NEWNSLOG_PATH)/nsc2e*";
+   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*";
    echo "Done processing $CITRIX_ADC_IP..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
 done < "$INPUT_FILE"
 echo "All done..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
