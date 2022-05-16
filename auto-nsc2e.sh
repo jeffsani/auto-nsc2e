@@ -5,7 +5,6 @@
 Variables
 #newnslog location on ADC
 NEWNSLOG_PATH="/var/nslog"
-RM_NSC2E_TOOL="yes"
 LOGFILE="$(date '+%m%d%Y')-auto-nsc2e.log"
 
 #Cleanup function
