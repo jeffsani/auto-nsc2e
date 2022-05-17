@@ -28,10 +28,13 @@ if [[ -z "${CITRIX_ADC_USER}" || -z "${CITRIX_ADC_PASSWORD}" ]]; then
     exit 1;
 fi
 
-#Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
-INPUT_FILE="adc-list.txt"
 [ ! -f $INPUT_FILE ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
-while IFS=':', read -r CITRIX_ADC_IP CITRIX_ADC_PORT
+#Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
+IFS=$OLDIFS
+OLDIFS=$IFS
+IFS=':'
+INPUT=adc-list.txt
+while read -r CITRIX_ADC_IP CITRIX_ADC_PORT
 echo "Now processing ADC: $CITRIX_ADC_IP"
 do
   echo "ADC IP: $CITRIX_ADC_IP and Port: $CITRIX_ADC_PORT" 
@@ -51,7 +54,8 @@ do
   # echo "Removing remote files and folders..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
   # sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*";
   # echo "Done processing $CITRIX_ADC_IP..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-done < "$INPUT_FILE"
+done < $INPUT
+IFS=$OLDIFS
 echo "All done..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
 
 do_cleanup
