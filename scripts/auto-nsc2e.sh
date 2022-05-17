@@ -2,7 +2,6 @@
 # auto-nsc2e.sh
 # This script will automate nsc2e to extract and convert specific newnslog counter data to excel format across a set of ADCs
 
-set -u
 set -o pipefail
 
 #Variables
