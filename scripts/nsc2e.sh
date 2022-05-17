@@ -5,6 +5,7 @@
 set -o pipefail
 
 #Create a temporary directory for the xfer
+cd /var/nslog
 mkdir nsc2e-tmp
 #Untar all newnslog files
 for file in *.tar.gz; do tar -xzf "$file" --directory nsc2e-tmp; done
