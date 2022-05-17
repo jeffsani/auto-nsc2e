@@ -40,7 +40,7 @@ do
   echo "Setting execute permissions on nsc2e..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e";
   echo "Executing nsc2e remotely..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-  sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell $NEWNSLOG_PATH/nsc2e.sh";
+  sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /bin/sh $NEWNSLOG_PATH/nsc2e.sh";
   echo "Transferring data back to script host..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt* ./$(date '+%m%d%Y')-$CITRIX_ADC_IP.txt;
   #echo "Removing remote files and folders..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
