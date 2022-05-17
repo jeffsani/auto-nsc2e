@@ -27,7 +27,6 @@ if [[ -z "${CITRIX_ADC_USER}" || -z "${CITRIX_ADC_PASSWORD}" ]]; then
     exit 1;
 fi
 
-
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
@@ -42,9 +41,9 @@ do
   echo "Executing nsc2e remotely..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /bin/sh $NEWNSLOG_PATH/nsc2e.sh";
   echo "Transferring data back to script host..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-  sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt* ./$(date '+%m%d%Y')-$CITRIX_ADC_IP.txt;
-  #echo "Removing remote files and folders..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-  #sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*";
+  sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt ./$(date '+%m%d%Y')-$CITRIX_ADC_IP.txt;
+  echo "Removing remote files and folders..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
+  sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*";
   echo "Done processing $CITRIX_ADC_IP..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
 done < $INPUT
 echo "All done..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
