@@ -34,7 +34,7 @@ while IFS=: read -r CITRIX_ADC_IP CITRIX_ADC_PORT
 do
   echo "Now processing ADC at $CITRIX_ADC_IP on Port: $CITRIX_ADC_PORT..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
   #Transfer tool and configuration to ADC
-  echo "Transfering files to ADC..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
+  echo "Transfering files to ADC..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT ../nsc2e/nsc2e ../nsc2e/nsc2e.conf nsc2e.sh $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH >> $LOGFILE
   echo "Setting execute permissions on nsc2e..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
   sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e" >> $LOGFILE
