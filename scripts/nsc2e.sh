@@ -2,13 +2,12 @@
 #nsc2e.sh
 #This script initiates the processng of the nsc2e utility against all newnslog archives
 
-set -x
 set -o pipefail
 
 #Create a temporary directory for the xfer
 mkdir nsc2e
 #Untar all newnslog files
-for file in *.tar.gz; do tar -xzf "/nsc2e/$(file)"; done
+for file in *.tar.gz; do tar -xzf "nsc2e/$(file)"; done
 #shopt -s dotglob
 find /nsc2e/newnslog* -prune -type d | while IFS= read -r d; do 
     #Process the counter data for nCores
