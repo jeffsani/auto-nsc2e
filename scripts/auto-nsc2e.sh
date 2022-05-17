@@ -32,7 +32,7 @@ fi
 OLDIFS=$IFS
 IFS=','
 INPUT='adc-list.txt'
-[ ! -f $INPUT_FILE ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
+[ ! -f $INPUT ] && { echo "$INPUT file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
 while read -r CITRIX_ADC_IP CITRIX_ADC_PORT
 echo "Now processing ADC: $CITRIX_ADC_IP"
 do
