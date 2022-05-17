@@ -1,4 +1,1 @@
-# Comma Separated List of ADCs that you want to automate counter data retrieval from
-# For HA pairs or Clusters, this should only be the primary device IP (NSIP or SNIP with MGMT enabled) or CLIP and port
-# in the format X.X.X.X:NN, i.e. 192.168.1.1:22
-192.168.121.5,22
+192.168.121.5:22

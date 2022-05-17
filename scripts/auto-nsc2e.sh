@@ -2,7 +2,7 @@
 # auto-nsc2e.sh
 # This script will automate nsc2e to extract and convert specific newnslog counter data to excel format across a set of ADCs
 
-set -x
+set -u
 set -o pipefail
 
 #Variables
@@ -30,9 +30,8 @@ fi
 
 [ ! -f $INPUT_FILE ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
-IFS=$OLDIFS
 OLDIFS=$IFS
-IFS=','
+IFS=':'
 INPUT="adc-list.txt"
 echo "Input File: $INPUT"
 while read -r CITRIX_ADC_IP CITRIX_ADC_PORT
