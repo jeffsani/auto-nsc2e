@@ -32,8 +32,9 @@ fi
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 IFS=$OLDIFS
 OLDIFS=$IFS
-IFS=':'
-INPUT=adc-list.txt
+IFS=','
+INPUT="adc-list.txt"
+echo "Input File: $INPUT"
 while read -r CITRIX_ADC_IP CITRIX_ADC_PORT
 echo "Now processing ADC: $CITRIX_ADC_IP"
 do
