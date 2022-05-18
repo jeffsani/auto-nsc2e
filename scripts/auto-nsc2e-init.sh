@@ -11,7 +11,7 @@ LOGFILE="$(date '+%m%d%Y')-auto-nsc2e-init.log"
 source ~/.bashrc
 if [[ -z "${CITRIX_ADC_USER}" && -z "${CITRIX_ADC_PASSWORD}" ]]; then echo "Required script environment variables are already set - do you need to change them? Y/N"; fi
 read ANSWER1
-if [ $ANSWER1 == "Y" ]; then
+if [ "$ANSWER1" == "Y" ]; then
 echo "Setting script variables in ~/.bashrc..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 echo "Enter the Citrix ADC user for the script:"
 read ADC_USER
@@ -33,7 +33,7 @@ fi
 # Download and install pre-requisites
 echo "Do you want to install required system pre-requisites (requires elevated privs or sudoer membership) Y/N?..."
 read ANSWER2
-if [ $ANSWER2 == "Y" ]; then
+if [ "$ANSWER2" == "Y" ]; then
    echo "Installing required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    which sudo yum >/dev/null && { sudo yum install sshpass more-utils; }
    which sudo apt-get >/dev/null && { sudo apt install sshpass moreutils; }
