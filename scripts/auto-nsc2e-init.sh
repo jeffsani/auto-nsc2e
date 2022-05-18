@@ -8,28 +8,28 @@ set -o pipefail
 LOGFILE="$(date '+%m%d%Y')-auto-nsc2e-init.log"
 
 # Prompt for and set rc variables 
-echo "Setting script variables..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+echo "Setting script variables in ~/.bashrc..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 echo "Enter the Citrix ADC user for the script:"
 read ADC_USER
 echo "Enter the Citrix ADC user password:"
 read ADC_PASSWD
 
-if grep --quiet "#Start-auto-nsc2e" ~/.bashrc; then
+if grep --quiet "#Start-NetScaler-Vars" ~/.bashrc; then
    sed -i -e "s/CITRIX_ADC_USER=.*/CITRIX_ADC_USER=$ADC_USER/" -e "s/CITRIX_ADC_PASSWORD=.*/CITRIX_ADC_PASSWORD=$ADC_PASSWD/" ~/.bashrc
 else
 cat >>~/.bashrc <<-EOF
-#Start-auto-nsc2e
+#Start-NetScaler-Vars
 export CITRIX_ADC_USER="$ADC_USER"
 export CITRIX_ADC_PASSWORD="$ADC_PASSWD"
-#End-auto-nsc2e
+#End-NetScaler-Vars
 EOF
 fi
 echo "Script variables set successfully..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 
 # Download and install pre-requisites
 echo "Installing required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-which sudo yum >/dev/null && { sudo yum install sshpass more-utils; }
-which sudo apt-get >/dev/null && { sudo apt install sshpass moreutils; }
+which sudo yum >/dev/null && { sudo root yum install sshpass more-utils; }
+which sudo apt-get >/dev/null && { sudo root apt install sshpass moreutils; }
 
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
