@@ -31,8 +31,8 @@ echo "Do you want to install required system pre-requisites (requires elevated p
 read ANSWER
 if [ $ANSWER == "Y" ]; then
    echo "Installing required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-   which sudo yum >/dev/null && { sudo root yum install sshpass more-utils; }
-   which sudo apt-get >/dev/null && { sudo root apt install sshpass moreutils; }
+   which sudo yum >/dev/null && { sudo yum install sshpass more-utils; }
+   which sudo apt-get >/dev/null && { sudo apt install sshpass moreutils; }
 else
    echo "Skipping required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    echo "Please refer to Readme for script requirements..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
