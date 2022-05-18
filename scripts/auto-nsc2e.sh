@@ -11,10 +11,10 @@ CITRIX_ADC_USER="nsroot"
 CITRIX_ADC_PASSWORD="Marig0ld"
 
 #Cleanup function
-function do_cleanup {
+#function do_cleanup {
 #echo "Searching for old logs > 30 days and removing them..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
 #find *.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete;
-}
+#}
 
 #Start Logging
 echo "User $(whoami) started the script" | ts '[%H:%M:%S]' | tee -a $LOGFILE
