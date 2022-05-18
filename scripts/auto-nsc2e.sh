@@ -7,8 +7,6 @@ set -o pipefail
 #Variables
 NEWNSLOG_PATH="/var/nslog"
 LOGFILE="$(date '+%m%d%Y')-auto-nsc2e.log"
-CITRIX_ADC_USER="nsroot"
-CITRIX_ADC_PASSWORD="Marig0ld"
 
 #Cleanup function
 #function do_cleanup {
