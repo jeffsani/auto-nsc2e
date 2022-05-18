@@ -10,8 +10,8 @@ LOGFILE="$(date '+%m%d%Y')-auto-nsc2e.log"
 
 #Cleanup function
 #function do_cleanup {
-#echo "Searching for old logs > 30 days and removing them..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
-#find *.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete;
+#echo "Searching for old logs > 30 days and removing them..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+#find *.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete
 #}
 
 #Start Logging
@@ -21,7 +21,7 @@ echo "Starting auto-nsc2e Log..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 # Check to see if one of the required environment variables for the script is not set
 source ~/.bashrc
 if [[ -z "${CITRIX_ADC_USER}" || -z "${CITRIX_ADC_PASSWORD}" ]]; then
-    echo "One or more of the required environment variables for the script is not set properly..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
+    echo "One or more of the required environment variables for the script is not set properly..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
     exit 1;
 fi
 

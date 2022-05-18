@@ -28,8 +28,8 @@ echo "Script variables set successfully..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 
 # Download and install pre-requisites
 echo "Installing required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-which yum >/dev/null && { yum install sshpass more-utils; }
-which apt-get >/dev/null && { apt install sshpass moreutils; }
+which sudo yum >/dev/null && { sudo yum install sshpass more-utils; }
+which sudo apt-get >/dev/null && { sudo apt install sshpass moreutils; }
 
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
