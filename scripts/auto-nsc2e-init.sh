@@ -9,8 +9,7 @@ LOGFILE="$(date '+%m%d%Y')-auto-nsc2e-init.log"
 
 # Prompt for and set rc variables 
 source ~/.bashrc
-if [[ -z "${CITRIX_ADC_USER}" && -z "${CITRIX_ADC_PASSWORD}" ]]; then
-echo "Required script environment variables are already set - do you need to change them? Y/N"
+if [[ -z "${CITRIX_ADC_USER}" && -z "${CITRIX_ADC_PASSWORD}" ]]; then echo "Required script environment variables are already set - do you need to change them? Y/N"; fi
 read ANSWER1
 if [ $ANSWER1 == "Y" ]; then
 echo "Setting script variables in ~/.bashrc..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
