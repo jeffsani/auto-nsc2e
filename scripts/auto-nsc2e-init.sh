@@ -27,16 +27,24 @@ fi
 echo "Script variables set successfully..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 
 # Download and install pre-requisites
-echo "Installing required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-which sudo yum >/dev/null && { sudo root yum install sshpass more-utils; }
-which sudo apt-get >/dev/null && { sudo root apt install sshpass moreutils; }
+echo "Do you want to install required system pre-requisites (requires elevated privs or sudoer membership) Y/N?..."
+read ANSWER
+if [ $ANSWER == "Y" ]; then
+   echo "Installing required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   which sudo yum >/dev/null && { sudo root yum install sshpass more-utils; }
+   which sudo apt-get >/dev/null && { sudo root apt install sshpass moreutils; }
+else
+   echo "Skipping required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   echo "Please refer to Readme for script requirements..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+fi
 
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
 while IFS=: read -r CITRIX_ADC_IP CITRIX_ADC_PORT
 do
-# Check known_hosts file for presence of NSIP and add if not present
+# Check known_hosts file and presence of NSIP and add if not present
+if [ ! -r ~/.ssh/known_hosts ]; then mkdir -p ~/.ssh; touch ~/.ssh/known_hosts; fi
 if [ $CITRIX_ADC_PORT -eq "22" ]; then
    ssh-keygen -F $CITRIX_ADC_IP -f ~/.ssh/known_hosts &>/dev/null
    if [ "$?" -ne "0" ]; then 
