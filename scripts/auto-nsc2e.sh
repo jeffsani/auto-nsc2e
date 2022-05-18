@@ -35,15 +35,15 @@ do
   echo "Now processing ADC at $CITRIX_ADC_IP on Port: $CITRIX_ADC_PORT..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
   #Transfer tool and configuration to ADC
   echo "Transfering files to ADC..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-  sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT ../nsc2e/nsc2e ../nsc2e/nsc2e.conf nsc2e.sh $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH
+  sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT ../nsc2e/nsc2e ../nsc2e/nsc2e.conf nsc2e.sh $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH &>>$LOGFILE
   echo "Setting execute permissions on nsc2e..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-  sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e" >> $LOGFILE
+  sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e" &>>$LOGFILE
   echo "Executing nsc2e remotely..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-  sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /bin/sh $NEWNSLOG_PATH/nsc2e.sh" >> $LOGFILE
+  sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell /bin/sh $NEWNSLOG_PATH/nsc2e.sh" &>>$LOGFILE
   echo "Transferring data back to script host..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-  sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt ./$(date '+%m%d%Y')-$CITRIX_ADC_IP.txt >> $LOGFILE
+  sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt ./$(date '+%m%d%Y')-$CITRIX_ADC_IP.txt &>>$LOGFILE
   echo "Removing remote files and folders..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-  sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*" >> $LOGFILE
+  sshpass -p "$CITRIX_ADC_PASSWORD" ssh -q $CITRIX_ADC_USER@$CITRIX_ADC_IP -p $CITRIX_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*" &>>$LOGFILE
   echo "Done processing $CITRIX_ADC_IP..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 done < $INPUT
 echo "All done..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
