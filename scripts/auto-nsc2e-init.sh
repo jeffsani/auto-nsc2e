@@ -49,8 +49,8 @@ if [ $CITRIX_ADC_PORT -eq "22" ]; then
    ssh-keygen -F $CITRIX_ADC_IP -f ~/.ssh/known_hosts &>/dev/null
    if [ "$?" -ne "0" ]; then 
       # Add ADC to known_hosts
-      echo "Adding ADC IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-      ssh-keyscan $CITRIX_ADC_IP >> ~/.ssh/known_hosts
+      echo "Adding ADC IP $CITRIX_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+      ssh-keyscan $CITRIX_ADC_IP >> ~/.ssh/known_hosts &>/dev/null
    else
       echo "ADC IP already present in known_hosts - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    fi
@@ -58,8 +58,8 @@ else
    ssh-keygen -F '[$CITRIX_ADC_IP]:$CITRIX_ADC_PORT' -f ~/.ssh/known_hosts &>/dev/null
    if [ "$?" -ne "0" ]; then 
       # Add ADC to known_hosts
-      echo "Adding ADC IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-      ssh-keyscan -p $CITRIX_ADC_PORT $CITRIX_ADC_IP >> ~/.ssh/known_hosts
+      echo "Adding ADC IP $CITRIX_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+      ssh-keyscan -p $CITRIX_ADC_PORT $CITRIX_ADC_IP >> ~/.ssh/known_hosts &>/dev/null
    else
       echo "ADC IP already present in known_hosts - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    fi
