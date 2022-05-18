@@ -12,8 +12,8 @@ CITRIX_ADC_PASSWORD="Marig0ld"
 
 #Cleanup function
 function do_cleanup {
-echo "Searching for old logs > 30 days and removing them..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-find *.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete
+#echo "Searching for old logs > 30 days and removing them..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+#find *.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete
 }
 
 #Start Logging
@@ -48,4 +48,4 @@ do
 done < $INPUT
 echo "All done..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 
-do_cleanup
+#do_cleanup
