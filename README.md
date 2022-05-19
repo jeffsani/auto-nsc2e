@@ -8,22 +8,22 @@ This script automates data processing of all newnslog archives which is normally
 </br></br>
 <table>
   <tr><td colspan="2"><strong>Network</strong></td></tr>
-  <td>Newnslog Counter Name</td><td>Description</td>
+  <tr><td>Newnslog Counter Name</td><td>Description</td></tr>
   <tr><td>allnic_tot_rx_mbits</td><td>Number of megabits received across all interfaces</td></tr>
   <tr><td>allnic_tot_rx_packets</td><td>Number of packets received all interfaces</td></tr>
   <tr><td>nic_err_rl_pkt_drops</td><td>Number of packets dropped due to platform license rate limit</td></tr>
   <tr><td colspan="2"><strong>CPU</strong></td></tr>
-  <td>Newnslog Counter Name</td><td>Description</td>
+  <tr><td>Newnslog Counter Name</td><td>Description</td></tr>
   <tr><td>avg_cpu_usage_pcnt</td><td>This counter tracks the average CPU utilization percentage</td></tr>
   <tr><td>mgmt_cpu_usage_pcnt</td><td> 	This counter tracks the management CPU utilization percentage</td></tr>
   <tr><td>packet_cpu_usage_pcnt</td><td>This counter tracks the packet CPU utilization percentage</td></tr>
   <tr><td colspan="2"><strong>Memory</strong></td></tr>
-  <td>Newnslog Counter Name</td><td>Description</td>
+  <tr><td>Newnslog Counter Name</td><td>Description</td></tr>
   <tr><td>mem_tot_MB</td><td>This counter tracks the total Main memory available for use by packet engine (PE), in megabytes</td></tr>
   <tr><td>mem_tot_use_MB</td><td>This counter tracks the total NetScaler Memory in use, in megabytes</td></tr>
   <tr><td>mem_usage_pcnt</td><td>This counter tracks the percentage of memory utilization on NetScaler</td></tr>
   <tr><td colspan="2"><strong>SSL</strong></td></tr>
-  <td>Newnslog Counter Name</td><td>Description</td>
+  <tr><td>Newnslog Counter Name</td><td>Description</td></tr>
   <tr><td>ssl_tot_sslInfo_TotalTxCount</td><td>This counter tracks the number of SSL transactions on the NetScaler appliance</td></tr>
   <tr><td>ssl_tot_sslInfo_TotalSessionCount</td><td>This counter tracks the number of SSL sessions on the NetScaler appliance</td></tr>
   <tr><td>ssl_tot_sslInfo_SessionNew</td><td>This counter tracks the rate of new SSL sessions on the NetScaler appliance</td></tr> 
@@ -31,7 +31,7 @@ This script automates data processing of all newnslog archives which is normally
   <tr><td>ssl_tot_sslInfo_Cipher_AES_256</td><td>This counter tracks the number of AES 256-bit cipher encryption on the NetScaler appliance.</td></tr>
   <tr><td>ssl_cur_q_size</td><td>This counter tracks the current queue size</td></tr>
   <tr><td colspan="2"><strong>HTTP</strong></td></tr>
-  <td>Newnslog Counter Name</td><td>Description</td>
+  <tr><td>Newnslog Counter Name</td><td>Description</td></tr>
   <tr><td>http_tot_Requests</td><td>This counter tracks HTTP requests received</td></tr>
   <tr><td>http_tot_Responses</td><td>This counter tracks HTTP responses sent</td></tr>
   <tr><td>http_tot_rxRequestBytes</td><td>This counter tracks the bytes of HTTP data received</td></tr>
