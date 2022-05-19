@@ -1,5 +1,6 @@
 # auto-nsc2e.sh
 author: Jeff Sani</br>
+Latest Update: 5/19/2022</br>
 current version: 1.0</br>
 
 <img src="nsc2e.png" style="display:block; margin-left: auto; margin-right: auto;">
