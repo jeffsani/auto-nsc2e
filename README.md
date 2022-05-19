@@ -38,7 +38,7 @@ This script automates data processing of all newnslog archives which is normally
   <tr><td>http_tot_rxResponseBytes</td><td>This counter tracks the bytes received as response data</td></tr>
 </table>
 
-You can learn about the specific counters available on ADC <a href="https://support.citrix.com/search/#/All%20Products?ct=All%20types&searchText=adc%20counters&sortBy=Relevance&pageIndex=1">here</a>. Note - Be aware that the more counters you specify in the configuration file, the longer it will take to execute the data extraction, processing, and overall script runtime will increase.  It is also recommended to run this utility script during a maintenance window or non-peak usage times as there will be a consistent load applied to the ADC management core which may impact mangement access and other related dataplane functions.
+You can learn about the specific counters available on ADC <a href="https://support.citrix.com/search/#/All%20Products?ct=All%20types&searchText=adc%20counters&sortBy=Relevance&pageIndex=1" target="_blank">here</a>. Note - Be aware that the more counters you specify in the configuration file, the longer it will take to execute the data extraction, processing, and overall script runtime will increase.  It is also recommended to run this utility script during a maintenance window or non-peak usage times as there will be a consistent load applied to the ADC management core which may impact mangement access and other related dataplane functions.
 
 <strong>Automated Setup Steps (For CentOS/Fedora or Ubuntu Linux Host)</strong></br>
 <ol type="1">
