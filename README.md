@@ -50,7 +50,7 @@ You can learn about the specific counters available on ADC <a href="https://supp
    <li>Run the scripts/auto-nsc2e-init.sh script</li>
 </ol>
 
-<strong>Script Requirements</strong>
+<strong>Script Requirements</strong></br>
 To implement this script you will need the following if you plan to implement manually and not use the init script:
 <ol type="1">
    <li>a Linux host to run the script on</li>
