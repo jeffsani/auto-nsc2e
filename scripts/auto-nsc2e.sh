@@ -20,7 +20,7 @@ echo "Starting auto-nsc2e Log..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 
 # Check to see if one of the required environment variables for the script is not set
 source ~/.bashrc
-if [[ -z "${CITRIX_ADC_USER}" || -z "${CITRIX_ADC_PASSWORD}" ]]; then
+if [[ -z ${CITRIX_ADC_USER} || -z ${CITRIX_ADC_PASSWORD} ]]; then
     echo "One or more of the required environment variables for the script is not set properly..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
     exit 1;
 fi
