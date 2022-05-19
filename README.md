@@ -10,7 +10,6 @@ This script automates data processing of all newnslog archives which is normally
   <tr><td colspan="2"><strong>Network</strong></td></tr>
   <td>Newnslog Counter Name</td><td>Description</td>
   <tr><td>allnic_tot_rx_mbits</td><td>Number of megabits received across all interfaces</td></tr>
-  <tr><td>allnic_tot_tx_mbits</td><td>Number of megabits transmitted across all interfaces</td></tr>
   <tr><td>allnic_tot_rx_packets</td><td>Number of packets received all interfaces</td></tr>
   <tr><td>nic_err_rl_pkt_drops</td><td>Number of packets dropped due to platform license rate limit</td></tr>
   <tr><td colspan="2"><strong>CPU</strong></td></tr>
@@ -41,15 +40,34 @@ This script automates data processing of all newnslog archives which is normally
 
 You can learn about the specific counters available on ADC <a href="https://support.citrix.com/search/#/All%20Products?ct=All%20types&searchText=adc%20counters&sortBy=Relevance&pageIndex=1">here</a>. Note - Be aware that the more counters you specify in the configuration file, the longer it will take to execute the data extraction, processing, and overall script runtime will increase.  It is also recommended to run this utility script during a maintenance window or non-peak usage times as there will be a consistent load applied to the ADC management core which may impact mangement access and other related dataplane functions.
 
-<h3>Requirements:</h3>
-<ul>
-  <li>a Linux host to run the script on</li>
+<strong>Automated Setup Steps (For CentOS/Fedora or Ubuntu Linux Host)</strong></br>
+<ol type="1">
+   <li>Login to your host as the user you want to create the script under</li>
+   <li>Install the required Linux packages or follow this prompt in the init script</li>
+   <li>Clone the repo into the desired directory on your linux host:</li>
+      <ul><li>git clone https://github.com/jeffsani/auto-nsc2e.git <directory> (directory is optional)</li></ul>
+   <li>cd to that directory</li>
+   <li>Run the scripts/auto-nsc2e-init.sh script</li>
+</ol>
+
+<h3>Script Requirements</strong></h3>
+To implement this script you will need the following if you plan to implement manually and not use the init script:
+<ol type="1">
+   <li>a Linux host to run the script on</li>
   <li>a list of the ADCs that you would like to iterate through</li>
   <li>a username and password that will work for each ADC device</li>
-</ul>
+   <li>Required Linux Packages:</li>
+       <ul>
+          <li>Debian/Ubuntu: git sshpass moreutils</li>
+          <li>CentOS/Fedora: git sshpass more-utils</li>
+       </ul>
+   <li>Environment variables set for the user running the script that contain the Citrix ADC user/pass</li>
+   <li>optional cron job to schedule the script run on an optimal interval</li>
+</ol>
 
-<h3>Required Linux Packages:</h3>
+<strong>Required Environment Variables</strong></br>
+The following variables and their respective values are required at script runtime so it is suggested they be stored in .bashrc
 <ul>
-  <li>sshpass</li>
+   <li>CITRIX_ADC_USER=XXX</li>
+   <li>CITRIX_ADC_PASSWORD=XXX</li>
 </ul>
-
