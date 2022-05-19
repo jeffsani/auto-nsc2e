@@ -40,7 +40,7 @@ if [ "$ANSWER2" == "Y" ]; then
    which sudo yum >/dev/null && { sudo yum install sshpass more-utils; }
    which sudo apt-get >/dev/null && { sudo apt install sshpass moreutils; }
 else
-   echo "Skipping required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   echo "Skipping install of required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    echo "Please refer to Readme for script requirements..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 fi
 
@@ -73,7 +73,7 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
    fi
    done < $INPUT
 else
-   echo "Please add at least 1 ADC host in the format IPADDR:PORT (X.X.X.X:NN) to the adc-list.txt file..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   echo "No entries found in adc-list.txt - Please add at least 1 ADC host in the format IPADDR:PORT (X.X.X.X:NN)..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    exit 1
 fi
 echo "All done!..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
