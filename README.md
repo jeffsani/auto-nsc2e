@@ -48,7 +48,9 @@ You can learn about the specific counters available on ADC <a href="https://supp
    <li>Clone the repo into the desired directory on your linux host:</li>
       <ul><li>git clone https://github.com/jeffsani/auto-nsc2e.git</li></ul>
    <li>cd to auto-nsc2e/scripts</li>
+   <li>manually populate the adc-list.txt file with the ADCs you want to extract data from (NSIP or SNIP with Management enabled)</li>   
    <li>Run the auto-nsc2e-init.sh script</li>
+   <li>Run the auto-nsc2e.sh script</li>
 </ol>
 
 <strong>Script Requirements</strong></br>
