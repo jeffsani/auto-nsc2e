@@ -45,16 +45,17 @@ You can learn about the specific counters available on ADC <a href="https://supp
    <li>Login to your host as the user you want to create the script under</li>
    <li>Install the required Linux packages or follow this prompt in the init script</li>
    <li>Clone the repo into the desired directory on your linux host:</li>
-      <ul><li>git clone https://github.com/jeffsani/auto-nsc2e.git <directory> (directory is optional)</li></ul>
-   <li>cd to that directory</li>
-   <li>Run the scripts/auto-nsc2e-init.sh script</li>
+      <ul><li>git clone https://github.com/jeffsani/auto-nsc2e.git</li></ul>
+   <li>cd to auto-nsc2e/scripts</li>
+   <li>Run the auto-nsc2e-init.sh script</li>
 </ol>
 
 <strong>Script Requirements</strong></br>
 To implement this script you will need the following if you plan to implement manually and not use the init script:
 <ol type="1">
-   <li>A Linux host to run the script on</li>
-  <li>A list of the ADCs that you would like to iterate through</li>
+  <li>A Linux host to run the script on</li>
+  <li>Populate adc-list.txt with the list of the ADCs that you would like to iterate through</li>
+    <ol>Entries should be input per line with IP and Port in the format: X.X.X.X:NNN</ol>
   <li>A username and password that will work for each ADC device</li>
    <li>Required Linux Packages:</li>
        <ul>

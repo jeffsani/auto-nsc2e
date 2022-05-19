@@ -42,31 +42,43 @@ else
    echo "Please refer to Readme for script requirements..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 fi
 
-#Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
+#Prompt to input the list of ADCs into adc-list.txt
+echo "Please input your first ADC IP"
+read ADCIP
+echo "Please input your first ADC Port"
+read ADCPort
+printf "%s\n" "$ADCIP:$ADCPort" > adc-list.txt
+
+#Check for existance of populated adc-list.txt and loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
-while IFS=: read -r CITRIX_ADC_IP CITRIX_ADC_PORT
-do
-# Check known_hosts file and presence of NSIP and add if not present
-if [ ! -r ~/.ssh/known_hosts ]; then mkdir -p ~/.ssh; touch ~/.ssh/known_hosts; fi
-if [ $CITRIX_ADC_PORT -eq "22" ]; then
-   ssh-keygen -F $CITRIX_ADC_IP -f ~/.ssh/known_hosts &>/dev/null
-   if [ "$?" -ne "0" ]; then 
-      # Add ADC to known_hosts
-      echo "Adding ADC IP $CITRIX_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-      ssh-keyscan $CITRIX_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
-   else
-      echo "ADC IP already present in known_hosts - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+if grep -E -c -q "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $INPUT -gt 0; then
+   while IFS=: read -r CITRIX_ADC_IP CITRIX_ADC_PORT
+   do
+   # Check known_hosts file and presence of NSIP and add if not present
+   if [ ! -r ~/.ssh/known_hosts ]; then mkdir -p ~/.ssh; touch ~/.ssh/known_hosts; fi
+   if [ $CITRIX_ADC_PORT -eq "22" ]; then
+      ssh-keygen -F $CITRIX_ADC_IP -f ~/.ssh/known_hosts &>/dev/null
+      if [ "$?" -ne "0" ]; then 
+         # Add ADC to known_hosts
+         echo "Adding ADC IP $CITRIX_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+         ssh-keyscan $CITRIX_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
+      else
+         echo "ADC IP already present in known_hosts - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+      fi
+   else 
+      ssh-keygen -F '[$CITRIX_ADC_IP]:$CITRIX_ADC_PORT' -f ~/.ssh/known_hosts &>/dev/null
+      if [ "$?" -ne "0" ]; then 
+         # Add ADC to known_hosts
+         echo "Adding ADC IP $CITRIX_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+         ssh-keyscan -p $CITRIX_ADC_PORT $CITRIX_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
+      else
+         echo "ADC IP already present in known_hosts - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+      fi
    fi
-else 
-   ssh-keygen -F '[$CITRIX_ADC_IP]:$CITRIX_ADC_PORT' -f ~/.ssh/known_hosts &>/dev/null
-   if [ "$?" -ne "0" ]; then 
-      # Add ADC to known_hosts
-      echo "Adding ADC IP $CITRIX_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-      ssh-keyscan -p $CITRIX_ADC_PORT $CITRIX_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
-   else
-      echo "ADC IP already present in known_hosts - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-   fi
+   done < $INPUT
+else
+   echo "Please add at least 1 ADC host in the format IPADDR:PORT (X.X.X.X:NN) to the adc-list.txt file..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   exit 1
 fi
-done < $INPUT
 echo "All done!..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
