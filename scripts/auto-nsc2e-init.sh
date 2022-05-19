@@ -8,7 +8,6 @@ set -o pipefail
 LOGFILE="$(date '+%m%d%Y')-auto-nsc2e-init.log"
 
 # Prompt for and set rc variables 
-source ~/.bashrc
 echo "Setting script variables in ~/.bashrc..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 echo "Enter the Citrix ADC user for the script:"
 read ADC_USER
@@ -24,6 +23,7 @@ export CITRIX_ADC_PASSWORD="$ADC_PASSWD"
 #End-NetScaler-Vars
 EOF
 fi
+source ~/.bashrc
 echo "Script variables set successfully..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 
 
