@@ -45,7 +45,7 @@ fi
 #Check for existance of populated adc-list.txt and loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
-if grep -E -c -q "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $INPUT -gt 0; then
+if [grep -E -c -q "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $INPUT -gt 0]; then
    while IFS=: read -r CITRIX_ADC_IP CITRIX_ADC_PORT
    do
    # Check known_hosts file and presence of NSIP and add if not present
