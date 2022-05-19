@@ -53,16 +53,16 @@ You can learn about the specific counters available on ADC <a href="https://supp
 <strong>Script Requirements</strong></br>
 To implement this script you will need the following if you plan to implement manually and not use the init script:
 <ol type="1">
-   <li>a Linux host to run the script on</li>
-  <li>a list of the ADCs that you would like to iterate through</li>
-  <li>a username and password that will work for each ADC device</li>
+   <li>A Linux host to run the script on</li>
+  <li>A list of the ADCs that you would like to iterate through</li>
+  <li>A username and password that will work for each ADC device</li>
    <li>Required Linux Packages:</li>
        <ul>
           <li>Debian/Ubuntu: git sshpass moreutils</li>
           <li>CentOS/Fedora: git sshpass more-utils</li>
        </ul>
    <li>Environment variables set for the user running the script that contain the Citrix ADC user/pass</li>
-   <li>optional cron job to schedule the script run on an optimal interval</li>
+   <li>Optional cron job to schedule the script run on an optimal interval</li>
 </ol>
 
 <strong>Required Environment Variables</strong></br>
