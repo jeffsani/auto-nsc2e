@@ -42,13 +42,6 @@ else
    echo "Please refer to Readme for script requirements..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 fi
 
-#Prompt to input the list of ADCs into adc-list.txt
-echo "Please input your first ADC IP"
-read ADCIP
-echo "Please input your first ADC Port"
-read ADCPort
-printf "%s\n" "$ADCIP:$ADCPort" > adc-list.txt
-
 #Check for existance of populated adc-list.txt and loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
