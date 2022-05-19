@@ -25,7 +25,7 @@ export CITRIX_ADC_PASSWORD="$ADC_PASSWD"
 EOF
 fi
 echo "Script variables set successfully..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-fi
+
 
 # Download and install pre-requisites
 shopt -s nocasematch
