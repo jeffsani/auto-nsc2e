@@ -102,10 +102,10 @@ if [ "$ANSWER1" == "Y" ]; then
       echo "Unknown option input - Skipping Cron setup..."
       exit 1
 	;;
+   esac
    crontab auto-nsc2e
    rm auto-nsc2e
    echo "Removing old cronjob if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-   esac
 fi
 
 echo "All done!..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
