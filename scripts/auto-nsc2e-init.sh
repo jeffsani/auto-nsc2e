@@ -77,9 +77,6 @@ echo "Would you like to schedule this script to be run - Y/N?"
 read ANSWER2
 ANSWER2=${ANSWER2,,} # convert to lowercase
 if [ "$ANSWER2" == "y" ]; then
-   echo "Removing old cron job if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-   crontab -l | grep -v "auto-nsc2e.sh" | crontab -
-   echo "Creating new cron job..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    echo "What interval would you like to run the script - D/W/M?"
    read ANSWER3
    ANSWER3=${ANSWER3,,} # convert to lowercase
@@ -87,7 +84,7 @@ if [ "$ANSWER2" == "y" ]; then
 	d)
 		# Day interval cron job
       echo "Creating daily cron job at 11:59PM..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-      echo "59 11 30 * * $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
+      echo "59 11 * * * $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
    ;;
 	w)
 		# Week interval cron job
@@ -97,7 +94,7 @@ if [ "$ANSWER2" == "y" ]; then
    m)
 		# Month Interval cron job
       echo "Creating Monthly cron job at 11:59PM on the 30th of each month..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-      echo "0 1 * * 3 $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
+      echo "59 11 30 * * $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
 	;;
 	*)
 		# Unknown input
@@ -105,9 +102,11 @@ if [ "$ANSWER2" == "y" ]; then
       exit 1
 	;;
    esac
+   echo "Removing old cronjob if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   crontab -l | grep -v "auto-nsc2e.sh" | crontab -
+   echo "Creating new cron job..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    crontab auto-nsc2e
    rm auto-nsc2e
-   echo "Removing old cronjob if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 fi
 
 echo "All done!..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
