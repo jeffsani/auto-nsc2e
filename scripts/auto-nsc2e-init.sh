@@ -81,8 +81,7 @@ if [ "$ANSWER1" == "Y" ]; then
    echo "Creating new cron job..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    echo "What interval would you like to run the script - D/W/M?"
    READ ANSWER2
-   do
-    case $ANSWER2 in
+   case $ANSWER2 in
 	"D")
 		# Day interval cron job
       echo "Creating daily cron job at 11:59PM..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
@@ -100,13 +99,12 @@ if [ "$ANSWER1" == "Y" ]; then
 	;;
 	"?")
 		# Unknown input
-      echo "Unknown option input..."
+      echo "Unknown option input - Skipping Cron setup..."
 	;;
    crontab auto-nsc2e
    rm auto-nsc2e
    echo "Removing old cronjob if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    esac
-
 fi
 
 echo "All done!..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
