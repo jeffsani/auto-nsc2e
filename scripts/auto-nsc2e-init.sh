@@ -27,10 +27,10 @@ source ~/.bashrc
 echo "Script variables set successfully..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 
 # Download and install pre-requisites
-shopt -s nocasematch
 echo "Do you want to install required system pre-requisites (requires elevated privs or sudoer membership) Y/N?..."
 read ANSWER1
-if [ "$ANSWER1" == "Y" ]; then
+ANSWER1=${ANSWER1,,} # convert to lowercase
+if [ "$ANSWER1" == "y" ]; then
    echo "Installing required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    which sudo yum >/dev/null && { sudo yum install sshpass more-utils; }
    which sudo apt-get >/dev/null && { sudo apt install sshpass moreutils; }
@@ -74,25 +74,27 @@ fi
 
 # Prompt user to create cron job for scheduling the script to be run at a desired interval
 echo "Would you like to schedule this script to be run - Y/N?"
-read ANSWER1
-if [ "$ANSWER1" == "Y" ]; then
+read ANSWER2
+ANSWER2=${ANSWER2,,} # convert to lowercase
+if [ "$ANSWER2" == "y" ]; then
    echo "Removing old cron job if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    crontab -l | grep -v "auto-nsc2e.sh" | crontab -
    echo "Creating new cron job..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    echo "What interval would you like to run the script - D/W/M?"
-   READ ANSWER2
-   case $ANSWER2 in
-	D)
+   read ANSWER3
+   ANSWER3=${ANSWER3,,} # convert to lowercase
+   case $ANSWER3 in
+	d)
 		# Day interval cron job
       echo "Creating daily cron job at 11:59PM..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
       echo "59 11 30 * * $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
    ;;
-	W)
+	w)
 		# Week interval cron job
       echo "Creating weekly cron job at 11:59PM on Saturday..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
       echo "59 11 * * 6 $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
 	;;
-   M)
+   m)
 		# Month Interval cron job
       echo "Creating Monthly cron job at 11:59PM on the 30th of each month..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
       echo "0 1 * * 3 $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
