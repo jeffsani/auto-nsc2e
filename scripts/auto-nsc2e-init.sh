@@ -74,7 +74,7 @@ fi
 
 # Prompt user to create cron job for scheduling the script to be run at a desired interval
 echo "Would you like to schedule this script to be run - Y/N?"
-READ ANSWER2
+read ANSWER1
 if [ "$ANSWER1" == "Y" ]; then
    echo "Removing old cron job if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    crontab -l | grep -v "auto-nsc2e.sh" | crontab -
@@ -100,6 +100,7 @@ if [ "$ANSWER1" == "Y" ]; then
 	"?")
 		# Unknown input
       echo "Unknown option input - Skipping Cron setup..."
+      exit 1
 	;;
    crontab auto-nsc2e
    rm auto-nsc2e
