@@ -4,8 +4,11 @@
 
 set -o pipefail
 
+#Create data and log directories
+mkdir log; mkdir data;
+
 # Create init logfile
-LOGFILE="$(date '+%m%d%Y')-auto-nsc2e-init.log"
+LOGFILE="../log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
 
 # Prompt for and set rc variables 
 echo "Setting script variables in ~/.bashrc..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
