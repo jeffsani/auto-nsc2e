@@ -82,22 +82,22 @@ if [ "$ANSWER1" == "Y" ]; then
    echo "What interval would you like to run the script - D/W/M?"
    READ ANSWER2
    case $ANSWER2 in
-	"D")
+	D)
 		# Day interval cron job
       echo "Creating daily cron job at 11:59PM..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
       echo "59 11 30 * * $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
-		;;
-	"W")
+   ;;
+	W)
 		# Week interval cron job
       echo "Creating weekly cron job at 11:59PM on Saturday..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
       echo "59 11 * * 6 $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
 	;;
-   "M")
+   M)
 		# Month Interval cron job
       echo "Creating Monthly cron job at 11:59PM on the 30th of each month..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
       echo "0 1 * * 3 $(pwd)/auto-nsc2e.sh" >> auto-nsc2e
 	;;
-	"?")
+	*)
 		# Unknown input
       echo "Unknown option input - Skipping Cron setup..."
       exit 1
