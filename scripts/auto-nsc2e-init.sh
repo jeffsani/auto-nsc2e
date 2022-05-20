@@ -5,7 +5,7 @@
 set -o pipefail
 
 #Create data and log directories
-mkdir log; mkdir data;
+mkdir ../log; mkdir ../data;
 
 # Create init logfile
 LOGFILE="../log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
