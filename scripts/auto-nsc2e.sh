@@ -9,10 +9,13 @@ NEWNSLOG_PATH="/var/nslog"
 LOGFILE="../log/$(date '+%m%d%Y')-auto-nsc2e.log"
 
 #Cleanup function
-#function do_cleanup {
-#echo "Searching for old logs > 30 days and removing them..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-#find *.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete
-#}
+function do_cleanup {
+echo "Searching for old logs > 30 days and removing them..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+find ../log/*.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete
+echo "Searching for old data files > 180 days and removing them..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+find ../data/*.txt -type f -not -name '*auto-nsc2e-init.log' -mtime -180 -delete
+echo "Cleanup completed..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+}
 
 #Start Logging
 echo "User $(whoami) started the script" | ts '[%H:%M:%S]' | tee -a $LOGFILE
@@ -30,7 +33,7 @@ INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
 while IFS=: read -r CITRIX_ADC_IP CITRIX_ADC_PORT
 do
-  echo "Now processing ADC at $CITRIX_ADC_IP on Port: $CITRIX_ADC_PORT..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
+  echo "Now processing ADC at $CITRIX_ADC_IP on Port $CITRIX_ADC_PORT..." | ts '[%H:%M:%S]' | tee -a $LOGFILE;
   #Transfer tool and configuration to ADC
   echo "Transfering files to ADC..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
   sshpass -p "$CITRIX_ADC_PASSWORD" scp -q -P $CITRIX_ADC_PORT ../nsc2e/nsc2e ../nsc2e/nsc2e.conf nsc2e.sh $CITRIX_ADC_USER@$CITRIX_ADC_IP:$NEWNSLOG_PATH &>>$LOGFILE
@@ -46,4 +49,4 @@ do
 done < $INPUT
 echo "All done..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 
-#do_cleanup
+do_cleanup

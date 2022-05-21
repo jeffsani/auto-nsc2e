@@ -30,7 +30,7 @@ source ~/.bashrc
 echo "Script variables set successfully..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 
 # Download and install pre-requisites
-echo "Do you want to install required system pre-requisites (requires elevated privs or sudoer membership) Y/N?..."
+echo "Do you want to install required system pre-requisites (requires elevated privs or sudoer membership) [Y/n]?..."
 read ANSWER1
 ANSWER1=${ANSWER1,,} # convert to lowercase
 if [ "$ANSWER1" == "y" ]; then
@@ -76,13 +76,13 @@ else
 fi
 
 # Prompt user to create cron job for scheduling the script to be run at a desired interval
-echo "Would you like to schedule this script to be run - Y/N?"
+echo "Would you like to schedule this script to be run - [Y/n]?"
 read ANSWER2
 ANSWER2=${ANSWER2,,} # convert to lowercase
 if [ "$ANSWER2" == "y" ]; then
-   echo "What interval would you like to run the script - D/W/M?"
+   echo "What interval would you like to run the script - [Daily/Weekly/Monthly]?"
    read ANSWER3
-   ANSWER3=${ANSWER3,,} # convert to lowercase
+   ANSWER3=${ANSWER3,,} # convert to lowercase; ANSWER3=${ANSWER3:0:1} # get first letter;
    case $ANSWER3 in
 	d)
 		# Day interval cron job

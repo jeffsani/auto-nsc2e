@@ -79,7 +79,8 @@ The following variables and their respective values are required at script runti
 <strong>ADC Service Account and Command Policy</strong></br>
 It is optional but recommended to create a service account on ADC to use for the purposes of running this script in lieu of just using nsroot:  
 
-<code>add system cmdPolicy auto-nsc2e_cmdpol ALLOW "^(scp).*/var/nslog/*"</code></br>
+<code>add system cmdPolicy auto-nsc2e_cmdpol ALLOW "^(scp).*/var/nslog/*|^(shell).*chmod 744|^(shell).*/bin/sh /var/nslog/nsc2e.sh|^(shell).*rm -rf /var/nslog/nsc2e*|^(scp).*/var/nslog/nsc2e.txt*"
+</code></br>
 <code>add system user auto-nsc2e -timeout 900 -maxsession 1 -allowedManagementInterface CLI</code></br>
 <code>set system user auto-nsc2e -password XXXXXX</code></br>
 <code>bind system user auto-nsc2e auto-nsc2e_cmdpol 100</code>
