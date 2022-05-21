@@ -79,6 +79,10 @@ fi
 echo "Would you like to schedule this script to be run - [Y/n]?"
 read ANSWER2
 ANSWER2=${ANSWER2,,} # convert to lowercase
+echo "Removing old cronjob if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+crontab -l | grep -v "auto-nsc2e.sh" | crontab -
+echo "Backing up existing entries..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+crontab -l > auto-nsc2e
 if [ "$ANSWER2" == "y" ]; then
    echo "What interval would you like to run the script - [Daily/Weekly/Monthly]?"
    read ANSWER3
@@ -105,8 +109,6 @@ if [ "$ANSWER2" == "y" ]; then
       exit 1
 	;;
    esac
-   echo "Removing old cronjob if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-   crontab -l | grep -v "auto-nsc2e.sh" | crontab -
    echo "Creating new cron job..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    crontab auto-nsc2e
    rm auto-nsc2e
