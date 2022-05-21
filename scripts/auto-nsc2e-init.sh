@@ -17,12 +17,12 @@ read ADC_USER
 echo "Enter the Citrix ADC user password:"
 read ADC_PASSWD
 if grep --quiet "#Start-auto-nsc2e-Vars" ~/.bashrc; then
-   sed -i -e "s/CITRIX_ADC_USER=.*/CITRIX_ADC_USER=$ADC_USER/" -e "s/CITRIX_ADC_PASSWORD=.*/CITRIX_ADC_PASSWORD=$ADC_PASSWD/" ~/.bashrc
+   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=$ADC_PASSWD/" ~/.bashrc
 else
 cat >>~/.bashrc <<-EOF
 #Start-auto-nsc2e-Vars
-export CITRIX_ADC_USER="$ADC_USER"
-export CITRIX_ADC_PASSWORD="$ADC_PASSWD"
+export NSC2E_ADC_USER="$ADC_USER"
+export NSC2E_ADC_PASSWORD="$ADC_PASSWD"
 #End-auto-nsc2e-Vars
 EOF
 fi
@@ -46,25 +46,25 @@ fi
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
 if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $INPUT) -gt 0 ]; then
-   while IFS=: read -r CITRIX_ADC_IP CITRIX_ADC_PORT
+   while IFS=: read -r NSC2E_ADC_IP NSC2E_ADC_PORT
    do
    # Check known_hosts file and presence of NSIP and add if not present
    if [ ! -r ~/.ssh/known_hosts ]; then mkdir -p ~/.ssh; touch ~/.ssh/known_hosts; fi
-   if [ $CITRIX_ADC_PORT -eq "22" ]; then
-      ssh-keygen -F $CITRIX_ADC_IP -f ~/.ssh/known_hosts &>/dev/null
+   if [ $NSC2E_ADC_PORT -eq "22" ]; then
+      ssh-keygen -F $NSC2E_ADC_IP -f ~/.ssh/known_hosts &>/dev/null
       if [ "$?" -ne "0" ]; then 
          # Add ADC to known_hosts
-         echo "Adding ADC IP $CITRIX_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-         ssh-keyscan $CITRIX_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
+         echo "Adding ADC IP $NSC2E_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+         ssh-keyscan $NSC2E_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
       else
          echo "ADC IP already present in known_hosts - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
       fi
    else 
-      ssh-keygen -F '[$CITRIX_ADC_IP]:$CITRIX_ADC_PORT' -f ~/.ssh/known_hosts &>/dev/null
+      ssh-keygen -F '[$NSC2E_ADC_IP]:$NSC2E_ADC_PORT' -f ~/.ssh/known_hosts &>/dev/null
       if [ "$?" -ne "0" ]; then 
          # Add ADC to known_hosts
-         echo "Adding ADC IP $CITRIX_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-         ssh-keyscan -p $CITRIX_ADC_PORT $CITRIX_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
+         echo "Adding ADC IP $NSC2E_ADC_IP to known_hosts..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+         ssh-keyscan -p $NSC2E_ADC_PORT $NSC2E_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
       else
          echo "ADC IP already present in known_hosts - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
       fi
