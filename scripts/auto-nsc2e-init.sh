@@ -16,14 +16,14 @@ echo "Enter the Citrix ADC user for the script:"
 read ADC_USER
 echo "Enter the Citrix ADC user password:"
 read ADC_PASSWD
-if grep --quiet "#Start-NetScaler-Vars" ~/.bashrc; then
+if grep --quiet "#Start-auto-nsc2e-Vars" ~/.bashrc; then
    sed -i -e "s/CITRIX_ADC_USER=.*/CITRIX_ADC_USER=$ADC_USER/" -e "s/CITRIX_ADC_PASSWORD=.*/CITRIX_ADC_PASSWORD=$ADC_PASSWD/" ~/.bashrc
 else
 cat >>~/.bashrc <<-EOF
-#Start-NetScaler-Vars
+#Start-auto-nsc2e-Vars
 export CITRIX_ADC_USER="$ADC_USER"
 export CITRIX_ADC_PASSWORD="$ADC_PASSWD"
-#End-NetScaler-Vars
+#End-auto-nsc2e-Vars
 EOF
 fi
 source ~/.bashrc
