@@ -48,9 +48,11 @@ fi
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
 if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $INPUT) -gt 0 ]; then
+   echo "At least one host foudn in adc-list.txt - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    while IFS=: read -r NSC2E_ADC_IP NSC2E_ADC_PORT
    do
    # Check known_hosts file and presence of NSIP and add if not present
+   echo "Checking for presence of ~/.ssh/known_hosts and adding entries for listed ADCs..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    if [ ! -r ~/.ssh/known_hosts ]; then mkdir -p ~/.ssh; touch ~/.ssh/known_hosts; fi
    if [ $NSC2E_ADC_PORT -eq "22" ]; then
       ssh-keygen -F $NSC2E_ADC_IP -f ~/.ssh/known_hosts &>/dev/null
@@ -94,9 +96,9 @@ if [ "$ANSWER4" == "y" ]; then
    crontab -l > auto-nsc2e
    echo "What interval would you like to run the script - [Daily/Weekly/Monthly]?"
    read ANSWER5
-   ANSWER5=${ANSWER5,,} # convert to lowercase; 
-   ANSWER5=${ANSWER5:0:1} # get first letter;
-   case $ANSWER3 in
+   ANSWER5=${ANSWER5,,} # convert to lowercase 
+   ANSWER5=${ANSWER5:0:1} # get first letter
+   case $ANSWER5 in
 	d)
 		# Day interval cron job
       echo "Creating daily cron job at 11:59PM..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
