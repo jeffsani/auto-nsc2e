@@ -71,22 +71,28 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
    fi
    done < $INPUT
 else
-   echo "No entries found in adc-list.txt - Please add at least 1 ADC host in the format IPADDR:PORT (X.X.X.X:NN)..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-   exit 1
+   #Prompt for first ADC IP and Port to write to adc-list.txt
+   echo "No entries found in adc-list.txt - at least one host is required to run the script..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   echo "Input an ADC IP with management enabled - either NSIP or SNIP:"
+   read ANSWER2
+   echo "Input the ADC Port:"
+   read ANSWER3
+   cat "$ANSWER2:$ANSWER3" > adc-list.txt
+   echo "ADC $ANSWER2:$ANSWER3 added as first entry into adcc-list.txt - add any additional ADC hosts in the format X.X.X.X:NN..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 fi
 
 # Prompt user to create cron job for scheduling the script to be run at a desired interval
 echo "Would you like to schedule this script to be run - [Y/n]?"
-read ANSWER2
-ANSWER2=${ANSWER2,,} # convert to lowercase
+read ANSWER4
+ANSWER4=${ANSWER4,,} # convert to lowercase
 echo "Removing old cronjob if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 crontab -l | grep -v "auto-nsc2e.sh" | crontab -
 echo "Backing up existing entries..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 crontab -l > auto-nsc2e
-if [ "$ANSWER2" == "y" ]; then
+if [ "$ANSWER4" == "y" ]; then
    echo "What interval would you like to run the script - [Daily/Weekly/Monthly]?"
-   read ANSWER3
-   ANSWER3=${ANSWER3,,} # convert to lowercase; ANSWER3=${ANSWER3:0:1} # get first letter;
+   read ANSWER5
+   ANSWER5=${ANSWER5,,} # convert to lowercase; ANSWER3=${ANSWER3:0:1} # get first letter;
    case $ANSWER3 in
 	d)
 		# Day interval cron job
