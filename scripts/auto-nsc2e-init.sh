@@ -77,7 +77,7 @@ else
    read ANSWER2
    echo "Input the ADC Port:"
    read ANSWER3
-   cat "$ANSWER2:$ANSWER3" > adc-list.txt
+   echo "$ANSWER2:$ANSWER3" > adc-list.txt
    echo "ADC $ANSWER2:$ANSWER3 added as first entry into adcc-list.txt - add any additional ADC hosts in the format X.X.X.X:NN..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 fi
 
@@ -85,11 +85,11 @@ fi
 echo "Would you like to schedule this script to be run - [Y/n]?"
 read ANSWER4
 ANSWER4=${ANSWER4,,} # convert to lowercase
-echo "Removing old cronjob if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-crontab -l | grep -v "auto-nsc2e.sh" | crontab -
-echo "Backing up existing entries..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-crontab -l > auto-nsc2e
 if [ "$ANSWER4" == "y" ]; then
+   echo "Removing old cronjob if it exists..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   crontab -l | grep -v "auto-nsc2e.sh" | crontab -
+   echo "Backing up existing entries..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   crontab -l > auto-nsc2e
    echo "What interval would you like to run the script - [Daily/Weekly/Monthly]?"
    read ANSWER5
    ANSWER5=${ANSWER5,,} # convert to lowercase; ANSWER3=${ANSWER3:0:1} # get first letter;
