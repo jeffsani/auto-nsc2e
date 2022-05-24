@@ -4,8 +4,10 @@
 
 set -o pipefail
 
-#Create data and log directories
-mkdir ../log; mkdir ../data;
+#Create data and log directories if they do not already exist
+echo "checking for log and data directories and creating if they do not exist..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+[ ! -d "../log" ] && mkdir ../log
+[ ! -d "../data" ] && mkdir ../data
 
 # Create init logfile
 LOGFILE="../log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
