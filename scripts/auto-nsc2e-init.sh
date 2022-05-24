@@ -41,14 +41,14 @@ if [ "$ANSWER1" == "y" ]; then
    which sudo apt-get >/dev/null && { sudo apt install sshpass moreutils; }
 else
    echo "Skipping install of required system pre-requisites..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-   echo "Please refer to Readme for script requirements..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   echo "Please refer to README.md for script requirements..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
 fi
 
 #Check for existance of populated adc-list.txt and loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..." | ts '[%H:%M:%S]' | tee -a $LOGFILE; exit 99; }
 if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $INPUT) -gt 0 ]; then
-   echo "At least one host foudn in adc-list.txt - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+   echo "At least one host found in adc-list.txt - Skipping add..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
    while IFS=: read -r NSC2E_ADC_IP NSC2E_ADC_PORT
    do
    # Check known_hosts file and presence of NSIP and add if not present
