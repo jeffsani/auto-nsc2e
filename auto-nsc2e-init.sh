@@ -19,12 +19,12 @@ read ADC_USER
 echo "Enter the Citrix ADC user password:"
 read ADC_PASSWD
 if grep --quiet "#Start-auto-nsc2e-Vars" ~/.bashrc; then
-   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=$ADC_PASSWD/" ~/.bashrc
+   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e 's/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD="\"$ADC_PASSWD\""/' ~/.bashrc
 else
 cat >>~/.bashrc <<-EOF
 #Start-auto-nsc2e-Vars
 export NSC2E_ADC_USER="$ADC_USER"
-export NSC2E_ADC_PASSWORD="$ADC_PASSWD"
+export NSC2E_ADC_PASSWORD="\"$ADC_PASSWD\""
 #End-auto-nsc2e-Vars
 EOF
 fi
