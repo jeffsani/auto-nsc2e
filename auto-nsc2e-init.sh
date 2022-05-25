@@ -2,6 +2,7 @@
 # auto-nsc2e-init.sh
 # This script will setup your host for the auto-nsc2e script on a debian or fedora/centos based host
 
+set -xv
 set -o pipefail
 
 #Create data and log directories if they do not already exist
@@ -127,5 +128,4 @@ if [ "$ANSWER4" == "y" ]; then
    crontab auto-nsc2e
    rm auto-nsc2e
 fi
-
 echo "All done!..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
