@@ -24,7 +24,7 @@ echo "Starting auto-nsc2e Log..."
 
 # Check to see if one of the required environment variables for the script is not set
 source ~/.bashrc
-if [[ -z ${NSC2E_ADC_USER} || -z ${NSC2E_ADC_PASSWORD} ]]; then
+if [[ -z ${NSC2E_ADC_USER} || -z ${NSC2E_ADC_PASSWORD} || -z ${SSHPASS} ]]; then
     echo "One or more of the required environment variables for the script is not set properly..."
     exit 1;
 fi
@@ -37,18 +37,18 @@ do
   echo "Now processing ADC at $NSC2E_ADC_IP on Port $NSC2E_ADC_PORT..."
   #Transfer tool and configuration to ADC
   echo "Transfering files to ADC..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
-  sshpass -p "$NSC2E_ADC_PASSWORD" scp -q -P $NSC2E_ADC_PORT ./bin/nsc2e ./bin/nsc2e.conf ./scripts/nsc2e.sh $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH
+  sshpass-e scp -q -P $NSC2E_ADC_PORT ./bin/nsc2e ./bin/nsc2e.conf ./scripts/nsc2e.sh $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH
   echo "Setting execute permissions on nsc2e..."
-  sshpass -p "$NSC2E_ADC_PASSWORD" ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e"
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e"
   echo "Executing nsc2e remotely..."
-  sshpass -p "$NSC2E_ADC_PASSWORD" ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell /bin/sh $NEWNSLOG_PATH/nsc2e.sh"
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell /bin/sh $NEWNSLOG_PATH/nsc2e.sh"
   echo "Transferring data back to script host..."
-  sshpass -p "$NSC2E_ADC_PASSWORD" scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt ./data/$(date '+%m%d%Y')-$NSC2E_ADC_IP.txt
+  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt ./data/$(date '+%m%d%Y')-$NSC2E_ADC_IP.txt
   echo "Removing remote files and folders..."
-  sshpass -p "$NSC2E_ADC_PASSWORD" ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*"
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*"
   echo "Done processing $NSC2E_ADC_IP..."
 done < $INPUT
 echo "All done..."
 
 do_cleanup
-) | ts '[%H:%M:%S]' | tee -a $LOGFILE
+) | ts '[%H:%M:%S]' | tee -a &>>$LOGFILE
