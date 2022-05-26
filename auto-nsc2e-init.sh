@@ -32,7 +32,7 @@ export NSC2E_ADC_USER="$ADC_USER"
 export NSC2E_ADC_PASSWORD="$ADC_PASSWD"
 export SSHPASS="\"$ADC_PASSWD\""
 #End-auto-nsc2e-Vars
-#EOF
+EOF
 fi
 source ~/.bashrc
 echo "Script variables set successfully..."
