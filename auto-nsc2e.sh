@@ -36,7 +36,7 @@ while IFS=: read -r NSC2E_ADC_IP NSC2E_ADC_PORT
 do
   echo "Now processing ADC at $NSC2E_ADC_IP on Port $NSC2E_ADC_PORT..."
   #Transfer tool and configuration to ADC
-  echo "Transfering files to ADC..." | ts '[%H:%M:%S]' | tee -a $LOGFILE
+  echo "Transfering files to ADC..."
   sshpass-e scp -q -P $NSC2E_ADC_PORT ./bin/nsc2e ./bin/nsc2e.conf ./scripts/nsc2e.sh $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH
   echo "Setting execute permissions on nsc2e..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e"
