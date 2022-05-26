@@ -2,7 +2,7 @@
 # auto-nsc2e-init.sh
 # This script will setup your host for the auto-nsc2e script on a debian or fedora/centos based host
 
-set -xv
+set -v
 set -o pipefail
 
 #Create data and log directories if they do not already exist
