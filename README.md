@@ -85,3 +85,5 @@ It is optional but recommended to create a service account on ADC to use for the
 <code>add system user auto-nsc2e -timeout 900 -maxsession 1 -allowedManagementInterface CLI</code></br>
 <code>set system user auto-nsc2e -password XXXXXX</code></br>
 <code>bind system user auto-nsc2e auto-nsc2e_cmdpol 100</code>
+
+<strong>Note:</strong> On 12.1 systems omit the "-allowedManagementInterface CLI" parameter
