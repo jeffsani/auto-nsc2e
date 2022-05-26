@@ -3,8 +3,6 @@
 #This script initiates the processng of the nsc2e utility against all newnslog archives
 #and concatenates the results into a single data file
 
-set -o pipefail
-
 #Create a temporary working directory
 cd /var/nslog
 mkdir nsc2e-tmp
