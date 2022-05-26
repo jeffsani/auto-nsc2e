@@ -14,9 +14,9 @@ find nsc2e-tmp/newnslog* -prune -type d | while IFS= read -r d; do
    ./nsc2e -c /netscaler/nsconmsg -K "$f" -f nsc2e.conf
    done
    #Concatenate the resultant files
-   head -n +1 nsc2e-nsc2e.conf-newnslog.ppe.0 >$d.txt
-   tail -q -n +2 nsc2e-nsc2e.conf-newnslog.ppe.* >>$d.txt
-   #awk 'FNR==1 && NR!=1 { while (/^"UTC"/) getline; } 1 {print}' nsc2e-nsc2e.conf-newnslog.ppe.* > $d.txt
+   #head -n +1 nsc2e-nsc2e.conf-newnslog.ppe.0 >$d.txt
+   #tail -q -n +2 nsc2e-nsc2e.conf-newnslog.ppe.* >>$d.txt
+   awk 'FNR==1 && NR!=1 { while (/^"UTC"/) getline; } 1 {print}' nsc2e-nsc2e.conf-newnslog.ppe.* > $d.txt
    #Remove ppe files
    rm nsc2e-nsc2e.conf-newnslog.ppe.*
 done

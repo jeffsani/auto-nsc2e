@@ -23,10 +23,10 @@ echo ""
 #source ~/.bashrc
 if [ ! -z "$NSC2E_ADC_USER" ] && [ ! -z "$NSC2E_ADC_PASSWORD" ] && [ ! -z "$SSHPASS" ]; then
    sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=$ADC_PASSWD/" -e "s/SSHPASS=.*/SSHPASS=$ADC_PASSWD/" ~/.bashrc
-   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=$ADC_PASSWD/" -e "s/SSHPASS=.*/SSHPASS=$ADC_PASSWD/" ~/.bash_profile
+   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/\'SSHPASS=$ADC_PASSWD\'/" ~/.bash_profile
 else
 #cat >>~/.bashrc <<-EOF
-echo "#Start-auto-nsc2e-Vars\nexport NSC2E_ADC_USER=$ADC_USER\nexport NSC2E_ADC_PASSWORD=$ADC_PASSWD\nexport SSHPASS=$ADC_PASSWD\n#End-auto-nsc2e-Vars\n" | tee -a  ~/.bashrc | tee -a ~/.bash_profile
+echo "#Start-auto-nsc2e-Vars\nexport NSC2E_ADC_USER=$ADC_USER\nexport NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'\nexport SSHPASS=\'$ADC_PASSWD\'\n#End-auto-nsc2e-Vars\n" | tee -a  ~/.bashrc | tee -a ~/.bash_profile
 fi
 #source ~/.bashrc
 echo "Script variables set successfully..."
