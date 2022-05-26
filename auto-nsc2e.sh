@@ -24,7 +24,7 @@ echo "Starting auto-nsc2e Log..."
 
 # Check to see if one of the required environment variables for the script is not set
 source ~/.bashrc
-if [[ -z ${NSC2E_ADC_USER} || -z ${NSC2E_ADC_PASSWORD} || -z ${SSHPASS} ]]; then
+if [ -z "$NSC2E_ADC_USER" ] || [ -z "$NSC2E_ADC_PASSWORD" ] || [ -z "$SSHPASS" ]; then
     echo "One or more of the required environment variables for the script is not set properly..."
     exit 1;
 fi
