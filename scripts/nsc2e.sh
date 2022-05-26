@@ -1,11 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 #nsc2e.sh
 #This script initiates the processng of the nsc2e utility against all newnslog archives
 #and concatenates the results into a single data file
 
-#Create a temporary working directory
+set -o pipefail
+
+#Change the working directory
 cd /var/nslog
-mkdir nsc2e-tmp
+#Create a temporary working directory if it does not exist
+[ ! -d "./nsc2e-tmp" ] && mkdir nsc2e-tmp
 #Untar all newnslog files
 for file in *.tar.gz; do tar -xzf "$file" --directory nsc2e-tmp; done
 find nsc2e-tmp/newnslog* -prune -type d | while IFS= read -r d; do 

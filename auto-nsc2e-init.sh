@@ -131,3 +131,4 @@ if [ "$ANSWER4" == "y" ]; then
 fi
 echo "All done!..."
 #) | ts '[%H:%M:%S]' | tee -a $LOGFILE
+exit 0

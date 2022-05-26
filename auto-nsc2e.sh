@@ -15,6 +15,7 @@ find ./log/*.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete
 echo "Searching for old data files > 180 days and removing them..."
 find ./data/*.txt -type f -not -name '*auto-nsc2e-init.log' -mtime -180 -delete
 echo "Cleanup completed..."
+exit 0
 }
 
 (
@@ -41,7 +42,7 @@ do
   echo "Setting execute permissions on nsc2e..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e"
   echo "Executing nsc2e remotely..."
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell /bin/sh source $NEWNSLOG_PATH/nsc2e.sh"
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $NEWNSLOG_PATH/nsc2e.sh"
   echo "Transferring data back to script host..."
   sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt ./data/$(date '+%m%d%Y')-$NSC2E_ADC_IP.txt
   echo "Removing remote files and folders..."

@@ -59,6 +59,7 @@ To implement this script you will need the following if you plan to implement ma
   <li>A Linux host to run the script on</li>
   <li>Populate adc-list.txt with the list of the ADCs that you would like to iterate through</li>
     <ol>Entries should be input per line with IP and Port in the format: X.X.X.X:NNN</ol>
+    <ol>ADC IP addresses should be accessible to script host and have management enabled (specifically SSH)</ol>
   <li>A username and password that will work for each ADC device</li>
    <li>Required Linux Packages:</li>
        <ul>
