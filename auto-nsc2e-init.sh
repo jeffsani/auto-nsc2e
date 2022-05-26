@@ -17,10 +17,8 @@ echo "checking for log and data directories and creating if they do not exist...
 
 # Prompt for and set rc variables 
 echo "Setting script variables in ~/.bashrc..."
-echo "Enter the Citrix ADC user for the script:"
-read ADC_USER
-echo "Enter the Citrix ADC user password:"
-read ADC_PASSWD
+read -p "Enter the Citrix ADC user for the script: " ADC_USER
+read -s -p "Enter the Citrix ADC user password: " ADC_PASSWD
 #source ~/.bashrc
 if [[ ! -z ${NSC2E_ADC_USER} && ! -z ${NSC2E_ADC_PASSWORD} && ! -z ${SSHPASS} ]]; then
 #if grep --quiet "#Start-auto-nsc2e-Vars" ~/.bashrc; then
