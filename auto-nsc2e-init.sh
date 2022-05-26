@@ -19,19 +19,16 @@ echo "checking for log and data directories and creating if they do not exist...
 echo "Setting script variables in ~/.bashrc..."
 read -p "Enter the Citrix ADC user for the script: " ADC_USER
 read -s -p "Enter the Citrix ADC user password: " ADC_PASSWD
+echo ""
 #source ~/.bashrc
 if [ ! -z "$NSC2E_ADC_USER" ] && [ ! -z "$NSC2E_ADC_PASSWORD" ] && [ ! -z "$SSHPASS" ]; then
-   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e 's/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD="\"$ADC_PASSWD\""/' -e "s/SSHPASS=.*/SSHPASS=$ADC_PASSWD/" ~/.bashrc
+   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=$ADC_PASSWD/" -e "s/SSHPASS=.*/SSHPASS=$ADC_PASSWD/" ~/.bashrc
+   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=$ADC_PASSWD/" -e "s/SSHPASS=.*/SSHPASS=$ADC_PASSWD/" ~/.bash_profile
 else
-cat >>~/.bashrc <<-EOF
-#Start-auto-nsc2e-Vars
-export NSC2E_ADC_USER="$ADC_USER"
-export NSC2E_ADC_PASSWORD="$ADC_PASSWD"
-export SSHPASS="\"$ADC_PASSWD\""
-#End-auto-nsc2e-Vars
-EOF
+#cat >>~/.bashrc <<-EOF
+echo "#Start-auto-nsc2e-Vars\nexport NSC2E_ADC_USER=$ADC_USER\nexport NSC2E_ADC_PASSWORD=$ADC_PASSWD\nexport SSHPASS=$ADC_PASSWD\n#End-auto-nsc2e-Vars\n" | tee -a  ~/.bashrc | tee -a ~/.bash_profile
 fi
-source ~/.bashrc
+#source ~/.bashrc
 echo "Script variables set successfully..."
 
 # Download and install pre-requisites
