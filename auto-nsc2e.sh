@@ -15,7 +15,6 @@ find ./log/*.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete
 echo "Searching for old data files > 180 days and removing them..."
 find ./data/*.txt -type f -not -name '*auto-nsc2e-init.log' -mtime -180 -delete
 echo "Cleanup completed..."
-exit 0
 }
 
 (
