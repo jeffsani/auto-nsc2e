@@ -2,7 +2,7 @@
 # auto-nsc2e.sh
 # This script will automate nsc2e to extract and convert specific newnslog counter data to excel format across a set of ADCs
 
-#set -o pipefail
+set -o pipefail
 
 #Variables
 NEWNSLOG_PATH="/var/nslog"
@@ -17,7 +17,7 @@ find ./data/*.txt -type f -not -name '*auto-nsc2e-init.log' -mtime -180 -delete
 echo "Cleanup completed..."
 }
 
-(
+( $LOGFILE
 #Start Logging
 echo "User $(whoami) started the script"
 echo "Starting auto-nsc2e Log..."
@@ -51,4 +51,4 @@ done < $INPUT
 echo "All done..."
 
 do_cleanup
-) | ts '[%H:%M:%S]' | tee -a $LOGFILE
+>> $LOGFILE) 2>&1 | ts '[%H:%M:%S]' | tee -a $LOGFILE
