@@ -7,6 +7,7 @@ set -o pipefail
 #Variables
 NEWNSLOG_PATH="/var/nslog"
 LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e.log"
+DATADIR="./data"
 
 #Cleanup function
 function do_cleanup {
@@ -43,7 +44,7 @@ do
   echo "Executing nsc2e remotely..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $NEWNSLOG_PATH/nsc2e.sh"
   echo "Transferring data back to script host..."
-  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt ./data/$(date '+%m%d%Y')-$NSC2E_ADC_IP.txt
+  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt $DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP.txt
   echo "Removing remote files and folders..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*"
   echo "Done processing $NSC2E_ADC_IP..."
