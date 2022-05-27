@@ -12,9 +12,9 @@ DATADIR="./data"
 #Cleanup function
 function do_cleanup {
 echo "Searching for old logs > 30 days and removing them..."
-find ./log/*.log -type f -not -name '*auto-nsc2e-init.log' -mtime -30 -delete
+find ./log/*.log -not -name '*auto-nsc2e-init.log' -mtime +30 -delete
 echo "Searching for old data files > 180 days and removing them..."
-find ./data/*.txt -type f -not -name '*auto-nsc2e-init.log' -mtime -180 -delete
+find ./data/*.txt -mtime +180 -delete
 echo "Cleanup completed..."
 }
 
@@ -44,7 +44,7 @@ do
   echo "Executing nsc2e remotely..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $NEWNSLOG_PATH/nsc2e.sh" < /dev/null
   echo "Transferring data back to script host..."
-  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt $DATADIR/myfile.txt < /dev/null
+  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt "$DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP" < /dev/null
   echo "Removing remote files and folders..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*" < /dev/null
   echo "Done processing $NSC2E_ADC_IP..."
