@@ -33,7 +33,7 @@ fi
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT file not found..."; exit 99; }
-while IFS=: read NSC2E_ADC_IP NSC2E_ADC_PORT
+while IFS=: read -r NSC2E_ADC_IP NSC2E_ADC_PORT
 do
   echo "Now processing ADC at $NSC2E_ADC_IP on Port $NSC2E_ADC_PORT..."
   #Transfer tool and configuration to ADC
@@ -42,9 +42,10 @@ do
   echo "Setting execute permissions on nsc2e..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e"
   echo "Executing nsc2e remotely..."
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $NEWNSLOG_PATH/nsc2e.sh"
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $NEWNSLOG_PATH/nsc2e.sh" < /dev/null
   echo "Transferring data back to script host..."
   sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt $DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP.txt
+  sshpass -e scp -q -P 22 auto-nsc2e@192.168.121.11:/var/nslog/nsc2e.txt ./data/$(date '+%m%d%Y')-192.168.121.11.txt
   echo "Removing remote files and folders..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*"
   echo "Done processing $NSC2E_ADC_IP..."
@@ -52,4 +53,4 @@ done < $INPUT
 echo "All done..."
 
 do_cleanup
->> $LOGFILE) 2>&1 | ts '[%H:%M:%S]' | tee -a $LOGFILE
+>> $LOGFILE) 2>&1 | ts '[%H:%M:%S]'
