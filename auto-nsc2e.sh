@@ -39,7 +39,7 @@ do
   #Transfer tool and configuration to ADC
   echo "Transfering files to ADC..."
   sshpass -e scp -q -P $NSC2E_ADC_PORT ./bin/nsc2e ./bin/nsc2e.conf ./scripts/nsc2e.sh $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH < /dev/null
-  echo "Setting execute permissions on nsc2e..."
+  echo "Setting execute permissions on nsc2e and nsc2e.sh..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e" < /dev/null
   echo "Executing nsc2e remotely..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $NEWNSLOG_PATH/nsc2e.sh" < /dev/null
