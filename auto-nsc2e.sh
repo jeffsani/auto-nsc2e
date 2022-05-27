@@ -17,7 +17,7 @@ find ./data/*.txt -type f -not -name '*auto-nsc2e-init.log' -mtime -180 -delete
 echo "Cleanup completed..."
 }
 
-( $LOGFILE
+(
 #Start Logging
 echo "User $(whoami) started the script"
 echo "Starting auto-nsc2e Log..."
