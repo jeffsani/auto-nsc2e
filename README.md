@@ -88,4 +88,4 @@ It is optional but recommended to create a service account on ADC to use for the
 <code>set system user auto-nsc2e -password XXXXXX</code></br>
 <code>bind system user auto-nsc2e auto-nsc2e_cmdpol 100</code>
 </br>
-<strong>Note:</strong> On 12.1 systems omit the "-allowedManagementInterface CLI" parameter
+<strong>Note:</strong> On 12.1 systems omit the "-allowedManagementInterface CLI" parameter as that is not supported
