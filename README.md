@@ -1,7 +1,8 @@
 # auto-nsc2e.sh
-author: Jeff Sani</br>
+Author: Jeff Sani</br>
 Latest Update: 5/19/2022</br>
-current version: 1.0</br>
+Current Version: 1.0</br>
+Contributors: Matt Drown</br>
 
 <img src="nsc2e.png" style="display:block; margin-left: auto; margin-right: auto;">
 <strong>Description</strong></br>
@@ -57,6 +58,8 @@ You can learn about the specific counters available on ADC <a href="https://supp
 To implement this script you will need the following if you plan to implement manually and not use the init script:
 <ol type="1">
   <li>A Linux host to run the script on</li>
+  <li>ADC Build Version 12.1, 13.0, or 13.1 (It may work on older builds as well but I did not test those and they are EOL)</li>
+  <li>A Linux host to run the script on</li>
   <li>Populate adc-list.txt with the list of the ADCs that you would like to iterate through</li>
     <ol>Entries should be input per line with IP and Port in the format: X.X.X.X:NNN</ol>
     <ol>ADC IP addresses should be accessible to script host and have management enabled (specifically SSH)</ol>
@@ -84,5 +87,5 @@ It is optional but recommended to create a service account on ADC to use for the
 <code>add system user auto-nsc2e -timeout 900 -maxsession 1 -allowedManagementInterface CLI</code></br>
 <code>set system user auto-nsc2e -password XXXXXX</code></br>
 <code>bind system user auto-nsc2e auto-nsc2e_cmdpol 100</code>
-
+</br>
 <strong>Note:</strong> On 12.1 systems omit the "-allowedManagementInterface CLI" parameter
