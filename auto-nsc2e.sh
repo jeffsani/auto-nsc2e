@@ -38,16 +38,15 @@ do
   echo "Now processing ADC at $NSC2E_ADC_IP on Port $NSC2E_ADC_PORT..."
   #Transfer tool and configuration to ADC
   echo "Transfering files to ADC..."
-  sshpass -e scp -q -P $NSC2E_ADC_PORT ./bin/nsc2e ./bin/nsc2e.conf ./scripts/nsc2e.sh $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH
+  sshpass -e scp -q -P $NSC2E_ADC_PORT ./bin/nsc2e ./bin/nsc2e.conf ./scripts/nsc2e.sh $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH < /dev/null
   echo "Setting execute permissions on nsc2e..."
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e"
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e" < /dev/null
   echo "Executing nsc2e remotely..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $NEWNSLOG_PATH/nsc2e.sh" < /dev/null
   echo "Transferring data back to script host..."
-  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt $DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP.txt
-  sshpass -e scp -q -P 22 auto-nsc2e@192.168.121.11:/var/nslog/nsc2e.txt ./data/$(date '+%m%d%Y')-192.168.121.11.txt
+  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt $DATADIR/myfile.txt < /dev/null
   echo "Removing remote files and folders..."
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*"
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*" < /dev/null
   echo "Done processing $NSC2E_ADC_IP..."
 done < $INPUT
 echo "All done..."
