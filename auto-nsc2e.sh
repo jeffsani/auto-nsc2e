@@ -52,4 +52,4 @@ done < $INPUT
 echo "All done..."
 
 do_cleanup
->> $LOGFILE) & | ts '[%H:%M:%S]' | tee -a $LOGFILE
+>> $LOGFILE) 2>&1 | ts '[%H:%M:%S]' | tee -a $LOGFILE
