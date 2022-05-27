@@ -19,8 +19,8 @@ read -p "Enter the Citrix ADC user for the script: " ADC_USER
 read -s -p "Enter the Citrix ADC user password: " ADC_PASSWD
 echo ""
 if [ ! -z "$NSC2E_ADC_USER" ] && [ ! -z "$NSC2E_ADC_PASSWORD" ] && [ ! -z "$SSHPASS" ]; then
-   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/\'SSHPASS=$ADC_PASSWD\'/" ~/.bashrc
-   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/\'SSHPASS=$ADC_PASSWD\'/" ~/.bash_profile
+   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" ~/.bashrc
+   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" ~/.bash_profile
 else
 cat >>~/.bashrc <<-EOF
 #Start-auto-nsc2e-Vars
