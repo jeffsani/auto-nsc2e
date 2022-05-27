@@ -7,7 +7,7 @@ set -o pipefail
 # Create init logfile
 LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
 
-#(
+(
 #Create data and log directories if they do not already exist
 echo "checking for log and data directories and creating if they do not exist..."
 [ ! -d "./log" ] && mkdir log
@@ -128,4 +128,4 @@ if [ "$ANSWER4" == "y" ]; then
    rm auto-nsc2e
 fi
 echo "All done!..."
-#) | ts '[%H:%M:%S]' | tee -a $LOGFILE
+>> $LOGFILE) 2>&1 | ts '[%H:%M:%S]' | tee -a $LOGFILE
