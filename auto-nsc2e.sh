@@ -32,7 +32,7 @@ fi
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT file not found..."; exit 99; }
-while IFS=: read -r NSC2E_ADC_IP NSC2E_ADC_PORT
+while IFS=: read NSC2E_ADC_IP NSC2E_ADC_PORT
 do
   echo "Now processing ADC at $NSC2E_ADC_IP on Port $NSC2E_ADC_PORT..."
   #Transfer tool and configuration to ADC
