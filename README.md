@@ -1,12 +1,12 @@
 # auto-nsc2e.sh
 Author: Jeff Sani</br>
-Latest Update: 5/19/2022</br>
-Current Version: 1.0</br>
 Contributors: Matt Drown</br>
+Last Update: 5/27/2022</br>
+Current Version: 1.1</br>
 
 <img src="nsc2e.png" style="display:block; margin-left: auto; margin-right: auto;">
 <strong>Description</strong></br>
-This script automates data processing of all newnslog archives which is normally a tedious, manual process if you have many newnslog archives to process (normally up to 100 which is the default in nsagg.conf).  This script will automate the use of the nsc2e utility against a list of ADC devices and iterate through the current newnslog and all archived files, process these in accord with the counters specified in the configuration file, combine them to a single file, and then download the resultant files to your host for further processing.  nsc2e is an application which converts Citrix ADC newnslog counter databases to a spreadsheet compatible tab delimited format so that data analysis can be performed more in-depthly.  It was developed back in the day by one of the orginal NetScaler devs - Jeff Xu.  Jeff if you are still out there, I hope this breathes new life into your much appreciated efforts.  nsc2e requires a conf file to indicate what specific counters should be processed as well as the target newnslog file to precess.  You can also specify filters for these if you desire to exclude data such as only data on a specific interface.  Some example conf files are included in the <a href="nsc2e/config-examples">nsc2e/config-examples</a> folder within this repo.  <p> ADC counter data is useful for a wide variety of applications such as historical usage, trending, or sizing.  The other benefit of this script is that you can schedule it to run on an interval so that you have historical data for each device stored in a central location.  By default, ADCs will purge newnslog archives once the file count is > 100. On a busy box, this might mean you only have a few days worth of sample data so you should adjust the script runtime  frequency accordingly if you want to get a full snapshot of data over a specific time interval.  A cron job creation option is available in the init script for the automated setup. If you were looking for information that would be useful for sizing a pooled license or SDX platform resource allocation, you might be interested in looking at the following set of counters for example:
+This script automates data processing of all newnslog archives which is normally a tedious, manual process if you have many newnslog archives to process (normally up to 100 which is the default in nsagg.conf).  This script will automate the use of the nsc2e utility against a list of Citrix ADC devices and iterate through the current newnslog and all archived files, process these in accord with the counters specified in the configuration file, combine them to a single file, and then download the resultant files to your host for further processing.  nsc2e is an application which converts newnslog counter databases to a spreadsheet compatible tab delimited format so that data analysis can be performed more in-depthly.  It was developed back in the day by one of the orginal NetScaler devs - Jeff Xu.  Jeff if you are still out there, I hope this breathes new life into your much appreciated efforts.  nsc2e requires a conf file to indicate what specific counters should be processed as well as the target newnslog file to precess.  You can also specify filters for these if you desire to exclude data such as only data on a specific interface.  Some example conf files are included in the <a href="nsc2e/config-examples">nsc2e/config-examples</a> folder within this repo.  <p> ADC counter data is useful for a wide variety of applications such as historical usage, trending, or sizing.  The other benefit of this script is that you can schedule it to run on an interval so that you have historical data for each device stored in a central location.  By default, ADCs will purge newnslog archives once the file count is > 100. On a busy box, this might mean you only have a few days worth of sample data so you should adjust the script runtime  frequency accordingly if you want to get a full snapshot of data over a specific time interval.  A cron job creation option is available in the init script for the automated setup. If you were looking for information that would be useful for sizing a pooled license or SDX platform resource allocation, you might be interested in looking at the following set of counters for example:
 </br></br>
 <table>
   <tr><td colspan="2"><strong>Network</strong></td></tr>
@@ -58,7 +58,7 @@ You can learn about the specific counters available on ADC <a href="https://supp
 To implement this script you will need the following if you plan to implement manually and not use the init script:
 <ol type="1">
   <li>A Linux host to run the script on</li>
-  <li>ADC Build Version 12.1, 13.0, or 13.1 (It may work on older builds as well but I did not test those and they are EOL)</li>
+  <li>Citrix ADC Build Version 12.1, 13.0, or 13.1 (It may work on older builds as well but I did not test those and they are EOL)</li>
   <li>A Linux host to run the script on</li>
   <li>Populate adc-list.txt with the list of the ADCs that you would like to iterate through</li>
     <ol>Entries should be input per line with IP and Port in the format: X.X.X.X:NNN</ol>
@@ -74,10 +74,11 @@ To implement this script you will need the following if you plan to implement ma
 </ol>
 
 <strong>Required Environment Variables</strong></br>
-The following variables and their respective values are required at script runtime so it is suggested they be stored in .bashrc
+The following variables and their respective values are required at script runtime so it is suggested they be stored in .bashrc and or .bash_profile or a local configuration file
 <ul>
    <li>CITRIX_ADC_USER=XXX</li>
    <li>CITRIX_ADC_PASSWORD=XXX</li>
+   <li>SSHPASS=XXX</li>
 </ul>
 
 <strong>ADC Service Account and Command Policy</strong></br>

@@ -10,8 +10,7 @@ LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
 (
 #Create data and log directories if they do not already exist
 echo "checking for log and data directories and creating if they do not exist..."
-[ ! -d "./log" ] && mkdir log
-[ ! -d "./data" ] && mkdir data
+[ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data;
 
 # Prompt for and set rc variables 
 echo "Setting script variables in ~/.bashrc..."
