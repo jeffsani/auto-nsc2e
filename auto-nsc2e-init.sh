@@ -98,7 +98,7 @@ if [ "$ANSWER4" == "y" ]; then
    echo "Backing up existing entries..."
    crontab -l > auto-nsc2e
    echo "What interval would you like to run the script - [Daily/Weekly/Monthly]? "; read ANSWER5
-   ANSWER5=${ANSWER5:0:1} # get first letter
+   ANSWER5=${ANSWER5:0:1}; ANSWER5=${ANSWER5,,} # get first letter and convert to lowercase
    case $ANSWER5 in
 	d)
 		# Day interval cron job
