@@ -14,8 +14,9 @@ echo "checking for log and data directories and creating if they do not exist...
 
 # Prompt for and set rc variables 
 echo "Setting script variables in ~/.bashrc..."
-read -p "Enter the Citrix ADC user for the script: " ADC_USER < /dev/null
-read -s -p "Enter the Citrix ADC user password: " ADC_PASSWD < /dev/null
+echo "Enter the Citrix ADC user for the script: "
+read ADC_USER
+read -s -p "Enter the Citrix ADC user password: " ADC_PASSWD
 echo ""
 if [ ! -z "$NSC2E_ADC_USER" ] && [ ! -z "$NSC2E_ADC_PASSWORD" ] && [ ! -z "$SSHPASS" ]; then
    sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" ~/.bashrc
@@ -39,7 +40,8 @@ fi
 echo "Script variables set successfully..."
 
 # Download and install pre-requisites
-read -p "Do you want to install required system pre-requisites (requires elevated privs or sudoer membership) [Y/n]? " ANSWER1 < /dev/null
+echo "Do you want to install required system pre-requisites (requires elevated privs or sudoer membership) [Y/n]? " 
+read ANSWER1
 ANSWER1=${ANSWER1,,} # convert to lowercase
 if [ "$ANSWER1" == "y" ]; then
    echo "Installing required system pre-requisites..."
@@ -61,7 +63,7 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
    echo "Checking for presence of ~/.ssh/known_hosts and adding entries for listed ADCs..."
    if [ ! -r ~/.ssh/known_hosts ]; then mkdir -p ~/.ssh; touch ~/.ssh/known_hosts; fi
    if [ $NSC2E_ADC_PORT -eq "22" ]; then
-      ssh-keygen -F $NSC2E_ADC_IP -f ~/.ssh/known_hosts &>/dev/null
+      ssh-keygen -F $NSC2E_ADC_IP -f ~/.ssh/known_hosts &> /dev/null
       if [ "$?" -ne "0" ]; then 
          # Add ADC to known_hosts
          echo "Adding ADC IP $NSC2E_ADC_IP to known_hosts..."
@@ -70,7 +72,7 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
          echo "ADC IP already present in known_hosts - Skipping add..."
       fi
    else 
-      ssh-keygen -F '[$NSC2E_ADC_IP]:$NSC2E_ADC_PORT' -f ~/.ssh/known_hosts &>/dev/null
+      ssh-keygen -F '[$NSC2E_ADC_IP]:$NSC2E_ADC_PORT' -f ~/.ssh/known_hosts &> /dev/null
       if [ "$?" -ne "0" ]; then 
          # Add ADC to known_hosts
          echo "Adding ADC IP $NSC2E_ADC_IP to known_hosts..."
@@ -83,22 +85,21 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
 else
    #Prompt for first ADC IP and Port to write to adc-list.txt
    echo "No entries found in adc-list.txt - at least one host is required to run the script..."
-   read -p "Input an ADC IP with management enabled - either NSIP or SNIP: " ANSWER2 < /dev/null
-   read -p "Input the ADC Port: " ANSWER3 < /dev/null
+   read -p "Input an ADC IP with management enabled - either NSIP or SNIP: " ANSWER2
+   read -p "Input the ADC Port: " ANSWER3
    echo "$ANSWER2:$ANSWER3" > adc-list.txt
    echo "ADC $ANSWER2:$ANSWER3 added as first entry into adc-list.txt - add any additional ADC hosts in the format X.X.X.X:NN..."
 fi
 
 # Prompt user to create cron job for scheduling the script to be run at a desired interval
-read -p "Would you like to schedule this script to be run - [Y/n]? " ANSWER4 < /dev/null
+read -p "Would you like to schedule this script to be run - [Y/n]? " ANSWER4
 ANSWER4=${ANSWER4,,} # convert to lowercase
 if [ "$ANSWER4" == "y" ]; then
    echo "Removing old cronjob if it exists..."
    crontab -l | grep -v "auto-nsc2e.sh" | crontab -
    echo "Backing up existing entries..."
    crontab -l > auto-nsc2e
-   read -p "What interval would you like to run the script - [Daily/Weekly/Monthly]? " ANSWER5 < /dev/null
-   ANSWER5=${ANSWER5,,} # convert to lowercase 
+   read -p "What interval would you like to run the script - [Daily/Weekly/Monthly]? " ANSWER5
    ANSWER5=${ANSWER5:0:1} # get first letter
    case $ANSWER5 in
 	d)
