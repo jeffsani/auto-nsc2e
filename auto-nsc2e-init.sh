@@ -17,7 +17,11 @@ echo "Setting script variables..."
 echo "Enter the Citrix ADC user for the script: "; read ADC_USER
 echo "Enter the Citrix ADC user password: "; read -s ADC_PASSWD
 echo ""
-source ~/.bashrc
+if [[ $- == *i* ]]; then
+   source ~/.bash_profile
+else
+   source ~/.bashrc
+fi
 if [[ ! -z "$NSC2E_ADC_USER" && ! -z "$NSC2E_ADC_PASSWORD" && ! -z "$SSHPASS" ]]; then
    echo "Exisitng variables detected - refreshing values..."
    sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" ~/.bashrc
@@ -60,7 +64,7 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
    while IFS=: read -r NSC2E_ADC_IP NSC2E_ADC_PORT
    do
    # Check known_hosts file and presence of NSIP and add if not present
-   echo "Checking for presence of ~/.ssh/known_hosts and adding entries for listed ADCs..."
+   echo "Checking for presence of $NSC2E_ADC_IP in ~/.ssh/known_hosts and adding entries for listed ADCs..."
    if [ ! -r ~/.ssh/known_hosts ]; then mkdir -p ~/.ssh; touch ~/.ssh/known_hosts; fi
    if [ $NSC2E_ADC_PORT -eq "22" ]; then
       ssh-keygen -F $NSC2E_ADC_IP -f ~/.ssh/known_hosts &> /dev/null
@@ -69,7 +73,7 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
          echo "Adding ADC IP $NSC2E_ADC_IP to known_hosts..."
          ssh-keyscan $NSC2E_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
       else
-         echo "ADC IP already present in known_hosts - Skipping add..."
+         echo "ADC IP $NSC2E_ADC_IP already present in known_hosts - Skipping add..."
       fi
    else 
       ssh-keygen -F '[$NSC2E_ADC_IP]:$NSC2E_ADC_PORT' -f ~/.ssh/known_hosts &> /dev/null
@@ -78,7 +82,7 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
          echo "Adding ADC IP $NSC2E_ADC_IP to known_hosts..."
          ssh-keyscan -p $NSC2E_ADC_PORT $NSC2E_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
       else
-         echo "ADC IP already present in known_hosts - Skipping add..."
+         echo "ADC IP $NSC2E_ADC_IP already present in known_hosts - Skipping add..."
       fi
    fi
    done < $INPUT
