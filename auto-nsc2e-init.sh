@@ -18,8 +18,10 @@ echo "Enter the Citrix ADC user for the script: "; read ADC_USER
 echo "Enter the Citrix ADC user password: "; read -s ADC_PASSWD
 echo ""
 if [[ $- == *i* ]]; then
+   echo "Running interactively so loading bash_profile vars..."
    source ~/.bash_profile
 else
+   echo "Running non-interactively so loading bashrc vars..."
    source ~/.bashrc
 fi
 if [[ ! -z "$NSC2E_ADC_USER" && ! -z "$NSC2E_ADC_PASSWORD" && ! -z "$SSHPASS" ]]; then
