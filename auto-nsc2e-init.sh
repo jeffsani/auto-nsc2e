@@ -17,6 +17,7 @@ echo "Setting script variables..."
 echo "Enter the Citrix ADC user for the script: "; read ADC_USER
 echo "Enter the Citrix ADC user password: "; read -s ADC_PASSWD
 echo ""
+source ~/.bashrc
 if [[ ! -z "$NSC2E_ADC_USER" && ! -z "$NSC2E_ADC_PASSWORD" && ! -z "$SSHPASS" ]]; then
    echo "Exisitng variables detected - refreshing values..."
    sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" ~/.bashrc
