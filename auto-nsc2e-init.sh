@@ -4,7 +4,7 @@
 
 set -o pipefail
 
-# Create init logfile
+#Variables
 LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
 
 (
