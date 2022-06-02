@@ -31,10 +31,10 @@ echo ""
 #if [[ if grep -q -e "NSC2E_ADC_USER=" ~/.bashrc; then ]]
 if [[ ! -z "$NSC2E_ADC_USER" && ! -z "$NSC2E_ADC_PASSWORD" && ! -z "$SSHPASS" ]]; then
    echo "Exisitng variables detected - refreshing values..."
-   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" ~/.bashrc
-   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" ~/.bash_profile
+   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" auto-nsc2e.conf
+   #sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" ~/.bash_profile
 else
-cat >>~/.bashrc <<-EOF
+cat >>auto-nsc2e.conf <<-EOF
 #Start-auto-nsc2e-Vars
 export NSC2E_ADC_USER="$ADC_USER"
 export NSC2E_ADC_PASSWORD='$ADC_PASSWD'
