@@ -24,7 +24,7 @@ if [[ ! -z "$NSC2E_ADC_USER" && ! -z "$NSC2E_ADC_PASSWORD" && ! -z "$SSHPASS" ]]
    echo "Exisitng variables detected - refreshing values..."
    sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" auto-nsc2e.conf
 else #file is empty so write vars
-cat >>auto-nsc2e.conf <<-EOF
+cat >>.auto-nsc2e.conf <<-EOF
 #Start-auto-nsc2e-Vars
 export NSC2E_ADC_USER="$ADC_USER"
 export NSC2E_ADC_PASSWORD='$ADC_PASSWD'
