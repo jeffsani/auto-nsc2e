@@ -1,13 +1,14 @@
 #!/bin/bash
 # auto-nsc2e.sh
-# This script will automate nsc2e to extract and convert specific newnslog counter data to excel format across a set of ADCs
+# This script will automate nsc2e to extract and convert specific newnslog counter data to TSV format across a set of ADCs
 
 set -o pipefail
 
-#Variables
+#SEtting ariables
 NEWNSLOG_PATH="/var/nslog"
 LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e.log"
 DATADIR="./data"
+NSC2E_CONF="~/.adc-scripts/auto-nsc2e.conf"
 
 #Cleanup function
 function do_cleanup {
@@ -24,10 +25,13 @@ echo "User $(whoami) started the script"
 echo "Starting auto-nsc2e Log..."
 
 # Load #Load common variables from conf and check vars to see if one of the required environment variables is not set
-. .auto-nsc2e.conf
-if [[ -z "$NSC2E_ADC_USER" || -z "$NSC2E_ADC_PASSWORD" || -z "$SSHPASS" ]]; then
-    echo "One or more of the required environment variables for the script is not set properly, please run the init script or edit .auto-nsc2e.conf..."
+. $NSC2E_CONF
+if [[ -z "$NSC2E_ADC_USER" || -z "$NSC2E_ADC_PASSWORD" ]]; then
+    echo "One or more of the required environment variables for the script is not set properly, exiting..."
     exit 1;
+else
+  #Set SSHPASS var for automation
+  SSHPASS=$NSC2E_ADC_PASSWORD
 fi
 
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e

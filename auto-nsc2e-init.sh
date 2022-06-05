@@ -10,7 +10,10 @@ LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
 (
 #Create data and log directories and conf if they do not already exist
 echo "checking for log and data directories and creating if they do not exist..."
-[ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data; [ ! -f "./auto-nsc2e.conf" ] && touch .auto-nsc2e.conf
+[ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data; [ ! -f "~/.adc-scripts/auto-nsc2e.conf" ] && touch ~/.adcrc
+
+# Setting variables
+NSC2E_CONF="~/.adcrc"
 
 # Prompt for and set variables 
 echo "Setting script variables..."
@@ -19,16 +22,15 @@ echo "Enter the Citrix ADC user password: "; read -s ADC_PASSWD
 echo ""
 
 #Load common variables from conf and check vars
-. .auto-nsc2e.conf
-if [[ ! -z "$NSC2E_ADC_USER" && ! -z "$NSC2E_ADC_PASSWORD" && ! -z "$SSHPASS" ]]; then #file exists so update vars
+. $NSC2E_CONF
+if [[ ! -z "$NSC2E_ADC_USER" && ! -z "$NSC2E_ADC_PASSWORD" ]]; then #file exists so update vars
    echo "Exisitng variables detected - refreshing values..."
-   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" auto-nsc2e.conf
+   sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" $NSC2E_CONF
 else #file is empty so write vars
-cat >>.auto-nsc2e.conf <<-EOF
+cat >>$NSC2E_CONF <<-EOF
 #Start-auto-nsc2e-Vars
 export NSC2E_ADC_USER="$ADC_USER"
 export NSC2E_ADC_PASSWORD='$ADC_PASSWD'
-export SSHPASS='$ADC_PASSWD'
 #End-auto-nsc2e-Vars
 EOF
 fi

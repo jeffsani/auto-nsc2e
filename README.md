@@ -76,9 +76,8 @@ To implement this script you will need the following if you plan to implement ma
 <strong>Required Environment Variables</strong></br>
 The following variables and their respective values are required at script runtime:
 <ul>
-   <li>CITRIX_ADC_USER=XXX</li>
-   <li>CITRIX_ADC_PASSWORD=XXX</li>
-   <li>SSHPASS=XXX</li>
+   <li>NSC2E_ADC_USER=XXX</li>
+   <li>NSC2E_ADC_PASSWORD=XXX</li>
 </ul>
 
 You can run the init script which will set these for you or create manually
