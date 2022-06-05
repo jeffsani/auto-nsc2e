@@ -48,7 +48,7 @@ do
   echo "Executing nsc2e remotely..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $NEWNSLOG_PATH/nsc2e.sh" < /dev/null
   echo "Transferring data back to script host..."
-  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.txt "$DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP.tsv" < /dev/null
+  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.tsv.gz "$DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP.tsv.gz" < /dev/null
   echo "Removing remote files and folders..."
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*" < /dev/null
   echo "Done processing $NSC2E_ADC_IP..."
