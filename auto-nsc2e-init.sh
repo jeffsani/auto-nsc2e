@@ -13,7 +13,7 @@ echo "checking for log and data directories and creating if they do not exist...
 [ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data; [ ! -f "~/.adcrc" ] && touch ~/.adcrc
 
 # Setting variables
-NSC2E_CONF="~/.adcrc"
+NSC2E_CONF=~/.adcrc
 
 # Prompt for and set variables 
 echo "Setting script variables..."
