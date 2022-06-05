@@ -18,7 +18,6 @@ find ./data/*.tsv -mtime +180 -delete
 echo "Cleanup completed..."
 }
 
-
 (
 #Start Logging
 echo "User $(whoami) started the script"
