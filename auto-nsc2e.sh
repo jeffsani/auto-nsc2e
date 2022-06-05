@@ -15,7 +15,7 @@ function do_cleanup {
 echo "Searching for old logs > 30 days and removing them..."
 find ./log/*.log -not -name '*auto-nsc2e-init.log' -mtime +30 -delete
 echo "Searching for old data files > 180 days and removing them..."
-find ./data/*.tsv -mtime +180 -delete
+find ./data/*.tsv.gz -mtime +180 -delete
 echo "Cleanup completed..."
 }
 
