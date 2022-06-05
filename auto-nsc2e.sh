@@ -31,7 +31,7 @@ if [[ -z "$NSC2E_ADC_USER" || -z "$NSC2E_ADC_PASSWORD" ]]; then
     exit 1;
 else
   #Set SSHPASS var for automation
-  SSHPASS="$NSC2E_ADC_PASSWORD"
+  export SSHPASS="$NSC2E_ADC_PASSWORD"
 fi
 
 #Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
