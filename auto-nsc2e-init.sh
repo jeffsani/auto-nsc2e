@@ -10,30 +10,20 @@ LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
 (
 #Create data and log directories and conf if they do not already exist
 echo "checking for log and data directories and creating if they do not exist..."
-[ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data; [ ! -f "./auto-nsc2e.conf" ] && touch auto-nsc2e.conf
+[ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data; [ ! -f "./auto-nsc2e.conf" ] && touch .auto-nsc2e.conf
 
 # Prompt for and set variables 
 echo "Setting script variables..."
 echo "Enter the Citrix ADC user for the script: "; read ADC_USER
 echo "Enter the Citrix ADC user password: "; read -s ADC_PASSWD
 echo ""
-#if [[ $- == *i* ]]; then
-#if [[ grep -]]
-#   echo "Running interactively so loading bash_profile vars..."
-#   source ~/.bash_profile
-#else
-#   echo "Running non-interactively so loading bashrc vars..."
-#   source ~/.bashrc
-#fi
-#[[ $- == *i* ]] && echo 'Interactive' || echo 'Not interactive'
-#shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'
-. ~/.bashrc
-#if [[ if grep -q -e "NSC2E_ADC_USER=" ~/.bashrc; then ]]
-if [[ ! -z "$NSC2E_ADC_USER" && ! -z "$NSC2E_ADC_PASSWORD" && ! -z "$SSHPASS" ]]; then
+
+#Load common variables from conf and check vars
+. .auto-nsc2e.conf
+if [[ ! -z "$NSC2E_ADC_USER" && ! -z "$NSC2E_ADC_PASSWORD" && ! -z "$SSHPASS" ]]; then #file exists so update vars
    echo "Exisitng variables detected - refreshing values..."
    sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" auto-nsc2e.conf
-   #sed -i -e "s/NSC2E_ADC_USER=.*/NSC2E_ADC_USER=$ADC_USER/" -e "s/NSC2E_ADC_PASSWORD=.*/NSC2E_ADC_PASSWORD=\'$ADC_PASSWD\'/" -e "s/SSHPASS=.*/SSHPASS=\'$ADC_PASSWD\'/" ~/.bash_profile
-else
+else #file is empty so write vars
 cat >>auto-nsc2e.conf <<-EOF
 #Start-auto-nsc2e-Vars
 export NSC2E_ADC_USER="$ADC_USER"

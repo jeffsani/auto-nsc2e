@@ -18,15 +18,16 @@ find ./data/*.tsv -mtime +180 -delete
 echo "Cleanup completed..."
 }
 
+
 (
 #Start Logging
 echo "User $(whoami) started the script"
 echo "Starting auto-nsc2e Log..."
 
-# Check to see if one of the required environment variables for the script is not set
-~/.bashrc
+# Load #Load common variables from conf and check vars to see if one of the required environment variables is not set
+. .auto-nsc2e.conf
 if [[ -z "$NSC2E_ADC_USER" || -z "$NSC2E_ADC_PASSWORD" || -z "$SSHPASS" ]]; then
-    echo "One or more of the required environment variables for the script is not set properly..."
+    echo "One or more of the required environment variables for the script is not set properly, please run the init script or edit .auto-nsc2e.conf..."
     exit 1;
 fi
 
