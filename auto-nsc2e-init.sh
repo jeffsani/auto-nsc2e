@@ -10,7 +10,7 @@ LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
 (
 #Create data and log directories and conf if they do not already exist
 echo "checking for log and data directories and creating if they do not exist..."
-[ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data; [ ! -f "~/.adc-scripts/auto-nsc2e.conf" ] && touch ~/.adcrc
+[ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data; [ ! -f "~/.adcrc" ] && touch ~/.adcrc
 
 # Setting variables
 NSC2E_CONF="~/.adcrc"
