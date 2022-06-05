@@ -54,13 +54,13 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
    while IFS=: read -r NSC2E_ADC_IP NSC2E_ADC_PORT
    do
    # Check known_hosts file and presence of NSIP and add if not present
-   echo "Checking for presence of $NSC2E_ADC_IP in ~/.ssh/known_hosts and adding entries for listed ADCs..."
+   echo "Checking for presence of $NSC2E_ADC_IP in ~/.ssh/known_hosts..."
    if [ ! -r ~/.ssh/known_hosts ]; then mkdir -p ~/.ssh; touch ~/.ssh/known_hosts; fi
    if [ $NSC2E_ADC_PORT -eq "22" ]; then
       ssh-keygen -F $NSC2E_ADC_IP -f ~/.ssh/known_hosts &> /dev/null
       if [ "$?" -ne "0" ]; then 
          # Add ADC to known_hosts
-         echo "Adding ADC IP $NSC2E_ADC_IP to known_hosts..."
+         echo "ADC IP $NSC2E_ADC_IP not present in known_hosts - Adding IP..."
          ssh-keyscan $NSC2E_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
       else
          echo "ADC IP $NSC2E_ADC_IP already present in known_hosts - Skipping add..."
@@ -69,7 +69,7 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
       ssh-keygen -F '[$NSC2E_ADC_IP]:$NSC2E_ADC_PORT' -f ~/.ssh/known_hosts &> /dev/null
       if [ "$?" -ne "0" ]; then 
          # Add ADC to known_hosts
-         echo "Adding ADC IP $NSC2E_ADC_IP to known_hosts..."
+         echo "ADC IP $NSC2E_ADC_IP not present in known_hosts - Adding IP..."
          ssh-keyscan -p $NSC2E_ADC_PORT $NSC2E_ADC_IP >> ~/.ssh/known_hosts 2> /dev/null
       else
          echo "ADC IP $NSC2E_ADC_IP already present in known_hosts - Skipping add..."
@@ -117,9 +117,9 @@ if [ "$ANSWER4" == "y" ]; then
       exit 1
 	;;
    esac
-   echo "Creating new cron job..."
    crontab auto-nsc2e
    rm auto-nsc2e
+   echo "Successfully created new cron job..."
 fi
 echo "All done!..."
 >> $LOGFILE) 2>&1 | ts '[%H:%M:%S]' | tee -a $LOGFILE
