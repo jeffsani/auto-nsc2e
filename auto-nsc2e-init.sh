@@ -123,5 +123,5 @@ if [ "$ANSWER4" == "y" ]; then
    rm auto-nsc2e
    echo "Successfully created new cron job..."
 fi
-echo "All done!..."
+echo "All done - Please update bin/nsc2e.conf with desired counters prior to running auto-nsc2e.sh script..."
 >> $LOGFILE) 2>&1 | ts '[%H:%M:%S]' | tee -a $LOGFILE
