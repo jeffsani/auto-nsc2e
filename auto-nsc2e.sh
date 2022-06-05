@@ -8,7 +8,7 @@ set -o pipefail
 NEWNSLOG_PATH="/var/nslog"
 LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e.log"
 DATADIR="./data"
-NSC2E_CONF="~/.adc-scripts/auto-nsc2e.conf"
+NSC2E_CONF=~/.adcrc
 
 #Cleanup function
 function do_cleanup {
