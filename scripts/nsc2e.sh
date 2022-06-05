@@ -9,7 +9,9 @@ set -o pipefail
 cd /var/nslog
 #Create a temporary working directory if it does not exist
 [ ! -d "./nsc2e-tmp" ] && mkdir nsc2e-tmp
-#Untar all newnslog files
+#Copy current newnslog file to working directory
+cp -r newnslog nsc2e-tmp
+#Untar all newnslog archives
 for file in *.tar.gz; do tar -xzf "$file" --directory nsc2e-tmp; done
 find nsc2e-tmp/newnslog* -prune -type d | while IFS= read -r d; do 
    #Process the counter data for nCores
