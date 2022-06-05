@@ -4,8 +4,8 @@
 
 set -o pipefail
 
-#SEtting ariables
-NEWNSLOG_PATH="/var/nslog"
+#Setting ariables
+WORKINGDIR="/var/tmp"
 LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e.log"
 DATADIR="./data"
 NSC2E_CONF=~/.adcrc
@@ -42,15 +42,15 @@ do
   echo "Now processing ADC at $NSC2E_ADC_IP on Port $NSC2E_ADC_PORT..."
   #Transfer tool and configuration to ADC
   echo "Transfering files to ADC..."
-  sshpass -e scp -q -P $NSC2E_ADC_PORT ./bin/nsc2e ./bin/nsc2e.conf ./scripts/nsc2e.sh $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH < /dev/null
+  sshpass -e scp -q -P $NSC2E_ADC_PORT ./bin/nsc2e ./bin/nsc2e.conf ./scripts/nsc2e.sh $NSC2E_ADC_USER@$NSC2E_ADC_IP:$WORKINGDIR < /dev/null
   echo "Setting execute permissions on nsc2e and nsc2e.sh..."
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $NEWNSLOG_PATH/nsc2e.sh $NEWNSLOG_PATH/nsc2e" < /dev/null
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell chmod 744 $WORKINGDIR/nsc2e.sh $WORKINGDIR/nsc2e" < /dev/null
   echo "Executing nsc2e remotely..."
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $NEWNSLOG_PATH/nsc2e.sh" < /dev/null
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell bash $WORKINGDIR/nsc2e.sh" < /dev/null
   echo "Transferring data back to script host..."
-  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$NEWNSLOG_PATH/nsc2e.tsv.gz "$DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP.tsv.gz" < /dev/null
+  sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$WORKINGDIR/nsc2e.tsv.gz "$DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP.tsv.gz" < /dev/null
   echo "Removing remote files and folders..."
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $NEWNSLOG_PATH/nsc2e*" < /dev/null
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $WORKINGDIR/nsc2e*" < /dev/null
   echo "Done processing $NSC2E_ADC_IP..."
 done < $INPUT
 echo "All done..."
