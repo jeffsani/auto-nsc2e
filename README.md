@@ -85,7 +85,7 @@ You can run the init script which will set these for you or create manually
 <strong>ADC Service Account and Command Policy</strong></br>
 It is optional but recommended to create a service account on ADC to use for the purposes of running this script in lieu of just using nsroot:  
 
-<code>add system cmdPolicy auto-nsc2e_cmdpol ALLOW "^(scp).\*/var/nslog/\*|^(shell).\*chmod 744|^(shell).\*bash /var/nslog/nsc2e.sh|^(shell).\*rm -rf /var/nslog/nsc2e\*</code></br>
+<code>add system cmdPolicy auto-nsc2e_cmdpol ALLOW "^(scp).\*/var/nslog/\*|^(shell).\*chmod 744|^(shell).\*bash /var/nslog/nsc2e.sh|^(shell).\*rm -rf /var/nslog/nsc2e\*"</code></br>
 <code>add system user auto-nsc2e -timeout 900 -maxsession 1 -allowedManagementInterface CLI</code></br>
 <code>set system user auto-nsc2e -password XXXXXX</code></br>
 <code>bind system user auto-nsc2e auto-nsc2e_cmdpol 100</code>
