@@ -74,12 +74,14 @@ To implement this script you will need the following if you plan to implement ma
 </ol>
 
 <strong>Required Environment Variables</strong></br>
-The following variables and their respective values are required at script runtime so it is suggested they be stored in .bashrc and or .bash_profile or a local configuration file
+The following variables and their respective values are required at script runtime:
 <ul>
    <li>CITRIX_ADC_USER=XXX</li>
    <li>CITRIX_ADC_PASSWORD=XXX</li>
    <li>SSHPASS=XXX</li>
 </ul>
+
+You can run the init script which will set these for you or create manually
 
 <strong>ADC Service Account and Command Policy</strong></br>
 It is optional but recommended to create a service account on ADC to use for the purposes of running this script in lieu of just using nsroot:  
