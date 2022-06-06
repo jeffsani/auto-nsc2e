@@ -53,7 +53,9 @@ do
   sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $WORKINGDIR/nsc2e*" < /dev/null
   echo "Done processing $NSC2E_ADC_IP..."
 done < $INPUT
-echo "All done..."
 
+# Run cleanup routine
 do_cleanup
+
+echo "All done..."
 >> $LOGFILE) 2>&1 | ts '[%H:%M:%S]' | tee -a $LOGFILE
