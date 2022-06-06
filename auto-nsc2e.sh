@@ -4,13 +4,13 @@
 
 set -o pipefail
 
-#Setting ariables
+# Set local variables
 WORKINGDIR="/var/tmp"
 LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e.log"
 DATADIR="./data"
 NSC2E_CONF=~/.adcrc
 
-#Cleanup function
+# Cleanup function
 function do_cleanup {
 echo "Searching for old logs > 30 days and removing them..."
 find ./log/*.log -not -name '*auto-nsc2e-init.log' -mtime +30 -delete
@@ -20,21 +20,21 @@ echo "Cleanup completed..."
 }
 
 (
-#Start Logging
+# Start Logging
 echo "User $(whoami) started the script"
 echo "Starting auto-nsc2e Log..."
 
-# Load #Load common variables from conf and check vars to see if one of the required environment variables is not set
+# Load common variables from conf and check vars to see if one of the required environment variables is not set
 . $NSC2E_CONF
 if [[ -z "$NSC2E_ADC_USER" || -z "$NSC2E_ADC_PASSWORD" ]]; then
     echo "One or more of the required environment variables for the script is not set properly, exiting..."
     exit 1;
 else
-  #Set SSHPASS var for automation
+  # Set SSHPASS var for automation
   export SSHPASS="$NSC2E_ADC_PASSWORD"
 fi
 
-#Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
+# Loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT file not found..."; exit 99; }
 while IFS=":" read -r NSC2E_ADC_IP NSC2E_ADC_PORT

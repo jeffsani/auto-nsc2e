@@ -4,16 +4,14 @@
 
 set -o pipefail
 
-#Variables
+# Set local variables
 LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e-init.log"
+NSC2E_CONF=~/.adcrc
 
 (
-#Create data and log directories and conf if they do not already exist
+# Create data and log directories and conf if they do not already exist
 echo "checking for log and data directories and creating if they do not exist..."
-[ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data; [ ! -f "~/.adcrc" ] && touch ~/.adcrc
-
-# Setting variables
-NSC2E_CONF=~/.adcrc
+[ ! -d "./log" ] && mkdir log; [ ! -d "./data" ] && mkdir data; [ ! -f "$NSC2E_CONF" ] && touch $NSC2E_CONF
 
 # Prompt for and set variables 
 echo "Setting script variables..."
@@ -48,7 +46,7 @@ else
    echo "Please refer to README.md for script requirements..."
 fi
 
-#Check for existance of populated adc-list.txt and loop through each ADC in adc-list.txt and process newnslog data with nsc2e
+# Check for existance of populated adc-list.txt and loop through each ADC in adc-list.txt and process newnslog data with nsc2e
 INPUT="adc-list.txt"
 [ ! -f $INPUT ] && { echo "$INPUT_FILE file not found..."; exit 99; }
 if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $INPUT) -gt 0 ]; then
@@ -79,7 +77,7 @@ if [ $(grep -cE "[0-9][0-9]*.[0-9][0-9]*\.[0-9][0-9]*.[0-9][0-9]*:[0-9][0-9]*" $
    fi
    done < $INPUT
 else
-   #Prompt for first ADC IP and Port to write to adc-list.txt
+   # Prompt for first ADC IP and Port to write to adc-list.txt
    echo "No entries found in adc-list.txt - at least one host is required to run the script..."
    echo "Input an ADC IP with management enabled - either NSIP or SNIP: "; read ANSWER2
    echo "Input the ADC Port: "; read ANSWER3
