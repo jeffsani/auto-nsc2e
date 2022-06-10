@@ -5,7 +5,7 @@
 set -o pipefail
 
 # Set local variables
-WORKINGDIR="/var/tmp"
+WORKINGDIR="/var/tmp/nsc2e-tmp"
 LOGFILE="./log/$(date '+%m%d%Y')-auto-nsc2e.log"
 DATADIR="./data"
 NSC2E_CONF=~/.adcrc
@@ -40,6 +40,8 @@ INPUT="adc-list.txt"
 while IFS=":" read -r NSC2E_ADC_IP NSC2E_ADC_PORT
 do
   echo "Now processing ADC at $NSC2E_ADC_IP on Port $NSC2E_ADC_PORT..."
+  #Create working directory
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell  mkdir -m 757 $WORKINGDIR" < /dev/null
   #Transfer tool and configuration to ADC
   echo "Transfering files to ADC..."
   sshpass -e scp -q -P $NSC2E_ADC_PORT ./bin/nsc2e ./bin/nsc2e.conf ./scripts/nsc2e.sh $NSC2E_ADC_USER@$NSC2E_ADC_IP:$WORKINGDIR < /dev/null
@@ -50,10 +52,7 @@ do
   echo "Transferring data back to script host..."
   sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$WORKINGDIR/nsc2e.tsv.gz "$DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP.tsv.gz" < /dev/null
   echo "Removing remote files and folders..."
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $WORKINGDIR/nsc2e" < /dev/null
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $WORKINGDIR/nsc2e.conf" < /dev/null
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $WORKINGDIR/nsc2e.sh" < /dev/null
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $WORKINGDIR/nsc2e-tmp" < /dev/null
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $WORKINGDIRBASE/nsc2e-tmp" < /dev/null
   echo "Done processing $NSC2E_ADC_IP..."
 done < $INPUT
 
