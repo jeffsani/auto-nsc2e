@@ -52,7 +52,7 @@ do
   echo "Transferring data back to script host..."
   sshpass -e scp -q -P $NSC2E_ADC_PORT $NSC2E_ADC_USER@$NSC2E_ADC_IP:$WORKINGDIR/nsc2e.tsv.gz "$DATADIR/$(date '+%m%d%Y')-$NSC2E_ADC_IP.tsv.gz" < /dev/null
   echo "Removing remote files and folders..."
-  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $WORKINGDIR/nsc2e-tmp" < /dev/null
+  sshpass -e ssh -q $NSC2E_ADC_USER@$NSC2E_ADC_IP -p $NSC2E_ADC_PORT "shell rm -rf $WORKINGDIR" < /dev/null
   echo "Done processing $NSC2E_ADC_IP..."
 done < $INPUT
 
