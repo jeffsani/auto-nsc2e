@@ -28,9 +28,12 @@ This script automates data processing of all newnslog archives which is normally
   <tr><td>Newnslog Counter Name</td><td>Description</td></tr>
   <tr><td>ssl_tot_sslInfo_TotalTxCount</td><td>This counter tracks the number of SSL transactions on the NetScaler appliance</td></tr>
   <tr><td>ssl_tot_sslInfo_TotalSessionCount</td><td>This counter tracks the number of SSL sessions on the NetScaler appliance</td></tr>
-  <tr><td>ssl_tot_sslInfo_SessionNew</td><td>This counter tracks the rate of new SSL sessions on the NetScaler appliance</td></tr> 
+  <tr><td>ssl_tot_sslInfo_SessionNew</td><td>This counter tracks the rate of new SSL sessions on the NetScaler appliance</td></tr>
+  <tr><td>ssl_tot_sslInfo_KeyEx_RSA_2048</td><td>This counter tracks the number of RSA 2048-bit key exchanges on the NetScaler appliance</td></tr>
+  <tr><td>ssl_tot_sslInfo_KeyEx_RSA_4096</td><td>This counter tracks the number of RSA 4096-bit key exchanges on the NetScaler appliance</td></tr>
+  <tr><td>ssl_tot_sslInfo_KeyEx_ECDHE</td><td>This counter tracks the number of ECDHE key exchanges on the NetScaler appliance</td></tr>
   <tr><td>ssl_tot_sslInfo_Auth_RSA</td><td>This counter tracks the number of RSA authentications on the NetScaler appliance</td></tr>
-  <tr><td>ssl_tot_sslInfo_Cipher_AES_256</td><td>This counter tracks the number of AES 256-bit cipher encryption on the NetScaler appliance.</td></tr>
+  <tr><td>ssl_tot_sslInfo_Cipher_AES_256</td><td>This counter tracks the number of AES 256-bit cipher encryption on the NetScaler appliance</td></tr>
   <tr><td>ssl_cur_q_size</td><td>This counter tracks the current queue size</td></tr>
   <tr><td colspan="2"><strong>HTTP</strong></td></tr>
   <tr><td>Newnslog Counter Name</td><td>Description</td></tr>
