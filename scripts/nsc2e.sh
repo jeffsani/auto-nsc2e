@@ -25,7 +25,7 @@ find newnslog* -prune -type d | while IFS= read -r d; do
 done
 
 #Concatenate all data to single file
-awk 'FNR==1 && NR!=1 { while (/^"UTC"/) getline; } 1 {print}' nsc2e-tmp/*.tsv > nsc2e.tsv
+awk 'FNR==1 && NR!=1 { while (/^"UTC"/) getline; } 1 {print}' *.tsv > nsc2e.tsv
 
 #Compress file for transfer to script host
 tar -czf nsc2e.tsv.gz nsc2e.tsv
