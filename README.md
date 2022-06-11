@@ -88,7 +88,7 @@ You can run the init script which will set these for you or create manually
 <strong>ADC Service Account and Command Policy</strong></br>
 It is optional but recommended to create a service account on ADC to use for the purposes of running this script in lieu of just using nsroot:  
 
-<code>add system cmdPolicy auto-nsc2e_cmdpol ALLOW "^(shell).\*mkdir\\s/var/tmp/nsc2e-tmp|^(scp).\*/var/tmp/nsc2e-tmp/\*|^(shell).\*chmod\\s744\\s/var/tmp/nsc2e-tmp/nsc2e.sh\\s/var/tmp/nsc2e-tmp/nsc2e|^(shella).\*bash\\s/var/tmp/nsc2e-tmp/nsc2e.sh|^(shell).\*rm\\s-rf\\s/var/tmp/nsc2e-tmp"</code></br>
+<code>add system cmdPolicy auto-nsc2e_cmdpol ALLOW "^(shell).\*mkdir\\s/var/tmp/nsc2e-tmp|^(scp).\*/var/tmp/nsc2e-tmp/\*|^(shell).\*chmod\\s744\\s/var/tmp/nsc2e-tmp/nsc2e.sh\\s/var/tmp/nsc2e-tmp/nsc2e|^(shell).\*bash\\s/var/tmp/nsc2e-tmp/nsc2e.sh|^(shell).\*rm\\s-rf\\s/var/tmp/nsc2e-tmp"</code></br>
 <code>add system user auto-nsc2e -timeout 1800 -maxsession 2 -allowedManagementInterface CLI</code></br>
 <code>bind system user auto-nsc2e auto-nsc2e_cmdpol 100</code>
 </br></br>
