@@ -1,0 +1,6 @@
+v1.0 - 3/5/2022
+- initial script version
+v1.1 - 5/7/2022
+- added support for 12.1 builds of ADC
+v1.2 - 7/11/2022
+- Optimized run time disk space utilization to limit impact to ADC hosts

@@ -1,8 +1,8 @@
 # auto-nsc2e.sh
 Author: Jeff Sani</br>
 Contributors: Matt Drown</br>
-Last Update: 5/27/2022</br>
-Current Version: 1.1</br>
+Last Update: 7/11/2022</br>
+Current Version: 1.2</br>
 
 <img src="nsc2e.png" style="display:block; margin-left: auto; margin-right: auto;">
 <strong>Description</strong></br>
